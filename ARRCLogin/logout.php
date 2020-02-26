@@ -1,11 +1,4 @@
 <?php
-// session_start();
-// //session_destroy();
-// // Redirect to the login page:
-// header('Location: index.php');
-?> 
-
-<?php
 // Initialize the session.
 // If you are using session_name("something"), don't forget it now!
 session_start();

@@ -36,7 +36,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
             $_SESSION['loggedin'] = TRUE;
             $_SESSION['name'] = $_POST['username'];
             $_SESSION['id'] = $id;
-            header('Location: \WEBprojects\ARCprojects\ARRC_LAFS\admin_page.php');
+            header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
         } else {
             echo 'Incorrect password!';
         }

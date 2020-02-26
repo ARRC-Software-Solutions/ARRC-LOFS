@@ -1,15 +1,12 @@
 <?php
-// We need to use sessions, so you should always start sessions using the below code.
+
 session_start();
-// If the user is not logged in redirect to the login page...
-if (!isset($_SESSION['loggedin'])) {
-	header('Location: \WEBprojects\ARCprojects\ARRCLogin\index.php');
-	exit();
+
+if(!isset($_SESSION['loggedin'])){
+    header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
+    exit();
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html>
 
@@ -88,10 +85,7 @@ if (!isset($_SESSION['loggedin'])) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="\WEBprojects\ARCprojects\ARRCLogin\logout.php">logout</a>
-                    
-                </li>   
+
                 
                 <!-- <li>
                     <a href="#">Contact</a>
@@ -113,23 +107,15 @@ if (!isset($_SESSION['loggedin'])) {
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
+                    <form method="post">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li> -->
                         </ul>
                     </div>
+                    </form>
                 </div>
             </nav>
 
@@ -144,6 +130,7 @@ if (!isset($_SESSION['loggedin'])) {
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
+    
     
 </body>
 
