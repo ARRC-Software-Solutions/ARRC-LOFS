@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin'])){
+if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }

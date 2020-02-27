@@ -14,7 +14,7 @@ body {
     width: 400px;
     background-color: #ffffff;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.8);
-    margin: 300px auto;
+    margin: 250px auto;
     
 }
 
@@ -69,7 +69,26 @@ margin-top: 25px;
     font-weight: bold;
     color: #ffffff;
     transition: background-color 0.2s;
+    
 }
+.btn {
+  border-radius: 10px;
+  width: 90%;
+  padding: 15px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+  background-color: #3274d6;
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
+.btn :hover {
+  background-color: #2868c7;
+    transition: background-color 0.2s;
+}
+
 .login form input[type="submit"]:hover {
   background-color: #2868c7;
     transition: background-color 0.2s;
@@ -396,9 +415,9 @@ input[type="email"]:focus {
   margin-bottom: 20px;
   text-shadow: none;
   position: relative;
-  background-color: #132039;
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid #000;
+  background-color: #3274d6;
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid #1b3d70;
   box-shadow: 0 0 0 1px #363d49 inset, 0 5px 10px rgba(0, 0, 0, 0.20);
 }
 .alert-error {
