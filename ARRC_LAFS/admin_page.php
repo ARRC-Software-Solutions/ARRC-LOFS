@@ -82,7 +82,7 @@ if(!isset($_SESSION['loggedin'])){
                             <a href="#">Page 2</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
                         </li>
                     </ul>
                 </li>
