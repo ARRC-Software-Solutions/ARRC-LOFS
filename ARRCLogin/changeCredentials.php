@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['message'] = 'Change Credentials';
+$_SESSION['message'] = 'Welcome!';
 // Change this to your connection info.
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
@@ -16,38 +16,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     // Now we check if the data from the login form was submitted, isset() will check if the data exists.
 
-    // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-    // if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
-    //     // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
-    //     $stmt->bind_param('s', $_POST['username']);
-    //     $stmt->execute();
-    //     // Store the result so we can check if the account exists in the database.
-    //     $stmt->store_result();
-    
-    //     if ($stmt->num_rows > 0) {
-    //         $stmt->bind_result($id, $password);
-    //         $stmt->fetch();
-    //         // Account exists, now we verify the password.
-    //         // Note: remember to use password_hash in your registration file to store the hashed passwords.
-    //         if (password_verify($_POST['password'], $password)) {
-    //             // Verification success! User has loggedin!
-    //             // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
-    //             session_regenerate_id();
-    //             $_SESSION['loggedin'] = true;
-    //             $_SESSION['name'] = $_POST['username'];
-    //             $_SESSION['id'] = $id;
-    //             header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
-    //         } else {
-    //             // echo 'Incorrect password!';
-    //             $_SESSION['message'] = "Please check your password.";
-    //         }
-    //     } else {
-    //         // echo 'Incorrect username!';
-    //         $_SESSION['message'] = "Please check your username.";
-    //     }
-
-    //     $stmt->close();
+    // if ( !isset($_POST['username'], $_POST['password']) ) {
+    // 	// Could not get the data that should have been sent.
+    // 	// die ('Please fill both the username and password field!');
+    // 	$_SESSION['message'] = "Please fill both the username and password field!";
     // }
+
+    // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
+    if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
+        // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
+        $stmt->bind_param('s', $_POST['username']);
+        $stmt->execute();
+        // Store the result so we can check if the account exists in the database.
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($id, $password);
+            $stmt->fetch();
+            // Account exists, now we verify the password.
+            // Note: remember to use password_hash in your registration file to store the hashed passwords.
+            if (password_verify($_POST['password'], $password)) {
+                
+                // Verification success! User has loggedin!
+                // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
+                // session_regenerate_id();
+                // $_SESSION['loggedin'] = true;
+                // $_SESSION['name'] = $_POST['username'];
+                // $_SESSION['id'] = $id;
+                //header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
+
+                $userName = $_POST['username'];
+                $newPassword = password_hash($_POST['nPassword']);
+                $newUsername = $_POST['nUsername'];
+
+                $sql = "UPDATE accounts SET password=$newPassword SET username =  WHERE username = $userName";
+
+                if ($conn->query($sql) === true) {
+                    $_SESSION['message'] ="Record updated successfully";
+                } else {
+                    $_SESSION['message'] ="Error updating record: " . $conn->error;
+                }
+
+            } else {
+                // echo 'Incorrect password!';
+                $_SESSION['message'] = "Incorrect Password";
+            }
+        } else {
+            // echo 'Incorrect username!';
+            $_SESSION['message'] = "Incorrect Username";
+        }
+        $stmt->close();
+    }
 }
 ?>
 
@@ -77,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<i class="fas fa-lock"></i>
 				</label>
 				<input type="password" name="password" placeholder="Old Password" id="password" >
-				<input type="text" name="username" placeholder="New Username" id="username" >
+				<input type="text" name="username" placeholder="New Username" id="nUsername" >
 				<label for="password">
 					<i class="fas fa-lock"></i>
 				</label>
-				<input type="password" name="password" placeholder="New Password" id="password" >
+				<input type="password" name="password" placeholder="New Password" id="nPassword" >
 				<input type="submit" value="Submit">
 				<button class = "btn" type="Submit" formaction= "\Myprojects\ARCprojects\ARRC_LAFS\admin_page.php">Back</button>
 			</form>

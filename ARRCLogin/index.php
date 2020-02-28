@@ -45,11 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
             } else {
                 // echo 'Incorrect password!';
-                $_SESSION['message'] = "Please check your password.";
+                $_SESSION['message'] = "Incorrect Password";
             }
         } else {
             // echo 'Incorrect username!';
-            $_SESSION['message'] = "Please check your username.";
+            $_SESSION['message'] = "Incorrect Username";
         }
 
         $stmt->close();
