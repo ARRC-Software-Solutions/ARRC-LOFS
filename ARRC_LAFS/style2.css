@@ -168,31 +168,36 @@ a.article:hover {
     }
 }
 
-.col-sm-3 {
+.row1 {
     text-align: center;
     padding: 0;
     margin: 0;
+    align-items: center;
+    justify-content: center;
 }
 
-button {
+.btn1 {
     border: 1px solid #6d7fcc;
     background: none;
-    padding: 100px 100px;
+    padding: 100px 130px;
     font-size: 20px;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 10%;
+    margin: 20px 30px;
     transition: 0.8s;
+    position: relative;
+    overflow: hidden;
 }
 
-button {
+.btn2 {
     color: #6d7fcc;
 }
 
-button:hover {
+.btn2:hover {
     color: #fff;
 }
 
-button::before {
+.btn2::before {
     content: "";
     position: absolute;
     left: 0;
@@ -203,11 +208,11 @@ button::before {
     transition: 0.8s;
 }
 
-button::before {
+.btn2::before {
     top: 0;
     border-radius: 0 0 10% 10%;
 }
 
-button:hover::before {
+.btn2:hover::before {
     height: 100%;
 }

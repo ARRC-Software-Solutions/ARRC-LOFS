@@ -124,31 +124,11 @@ if (!isset($_SESSION['loggedin'])) {
             </nav>
 
             
-    <div class="row">
-        <div class="col-sm-3">
-
-            <button type="button" onclick="#">Users</button>
-            <p>1 Million</p> 
-    
-        </div>
-        <div class="col-sm-3">
-
-            <button type="button" onclick="#">Users</button>
-            <p>100 Million</p> 
-
-        </div>
-        <div class="col-sm-3">
-         
-            <button type="button" onclick="#">Users</button>
-            <p>10 Million</p> 
-         
-        </div>
-        <div class="col-sm-3">
-        
-            <button type="button" onclick="#">Users</button>
-            <p>30%</p> 
-         
-        </div>
+    <div class="row1">
+            <button type="button" class="btn1 btn2" onclick="#">Users</button>
+            <button type="button" class="btn1 btn2" onclick="#">Users</button>
+            <button type="button" class="btn1 btn2" onclick="#">Users</button>
+            <button type="button" class="btn1 btn2" onclick="#">Users</button>   
       </div>
 
         </div>
