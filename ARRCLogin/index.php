@@ -4,7 +4,7 @@ $_SESSION['message'] = 'Welcome!';
 // Change this to your connection info.
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
-$DATABASE_PASS = '1234';
+$DATABASE_PASS = '';
 $DATABASE_NAME = 'phplogin';
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 		<link href="style.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="assets/ARRC-A.png" type="image/ico">
 	</head>
 	<body>
 

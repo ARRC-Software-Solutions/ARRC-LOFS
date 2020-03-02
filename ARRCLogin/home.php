@@ -10,6 +10,7 @@ if (!isset($_SESSION['loggedin'])) {
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="icon" href="assets/ARRC-A.png" type="image/ico">
 		<meta charset="utf-8">
 		<title>Home Page</title>
 		<link href="style.css" rel="stylesheet" type="text/css">

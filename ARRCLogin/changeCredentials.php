@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 	<head>
+        <link rel="icon" href="assets/ARRC-A.png" type="image/ico">
 		<meta charset="utf-8">
 		<title>Change Credentials</title>
 	

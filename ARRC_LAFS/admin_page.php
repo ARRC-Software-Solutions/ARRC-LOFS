@@ -11,11 +11,13 @@ if (!isset($_SESSION['loggedin'])) {
 <html>
 
 <head>
+    <link rel="icon" href="ARRCLogin/assets/ARRC-A.png" type="image/ico">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>LOFS</title>
+    
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\css\bootstrap.min.css">
@@ -46,7 +48,7 @@ if (!isset($_SESSION['loggedin'])) {
                             <a href="tables.php">Tables</a>
                         </li>
                         <li>
-                            <a href="#">Overview</a>
+                            <a href="overview.php">Overview</a>
                         </li>
                         <li>
                             <a href="#">Details</a>
@@ -123,6 +125,8 @@ if (!isset($_SESSION['loggedin'])) {
             
         </div>
     </div>
+
+    
     
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

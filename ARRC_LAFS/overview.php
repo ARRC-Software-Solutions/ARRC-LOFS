@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -10,10 +19,11 @@
     <title>LOFS</title>
 
     <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\css\bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style2.css">
 
+    <script src="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\js\bootstrap.min.js"></script>
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -25,7 +35,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><a href="admin_page.php"><img src="ARRC.png" alt="logo" width=200 height=75 ></a></h3>
+                <h3><a href="admin_page.php"><img src="ARRC.png" alt="logo" width=200 height=75></a></h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -37,7 +47,7 @@
                             <a href="tables.php">Tables</a>
                         </li>
                         <li>
-                            <a href="#">Overview</a>
+                            <a href="overview.php">Overview</a>
                         </li>
                         <li>
                             <a href="#">Details</a>
@@ -46,7 +56,11 @@
                 </li>
                 <li>
                     <a href="search.php">Search</a>
+                    
                 </li>   
+                <!-- <li>
+                    <a href="transactions.php">Transactions</a>
+                </li> -->
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Transactions</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
@@ -69,10 +83,11 @@
                             <a href="#">Page 2</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
                         </li>
                     </ul>
                 </li>
+
                 
                 <!-- <li>
                     <a href="#">Contact</a>
@@ -80,6 +95,8 @@
             </ul>
 
         </nav>
+
+        
 
         <!-- Page Content  -->
         <div id="content">
@@ -94,73 +111,49 @@
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
+                    <form method="post">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li> -->
                         </ul>
                     </div>
+                    </form>
                 </div>
             </nav>
 
-            <form>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputType">Type</label>
-                <input type="type" class="form-control" id="inputType" placeholder="e.g. Electronics" required>
-                </div>
-                <div class="form-group col-md-6">
-                <label for="inputRoomN">Room number</label>
-                <input type="text" class="form-control" id="inputRoomN" placeholder="e.g. FOX4-R405" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputDesc">Description</label>
-                <input type="text" class="form-control" id="inputDesc" required>
-            </div>
-            <div class="form-group">
-                <label for="inputDate">Date Found</label>
-                <input type="date" class="form-control" id="inputDate" placeholder="">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputSG">Security Guard</label>
-                <input type="text" class="form-control" id="inputSG" placeholder="lastname" required>
-                </div>
-                <div class="form-group col-md-4 ">
-                <label for="inputState">Semester</label>
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect02" required>
-                        <option selected>Choose...</option>
-                        <option value="1">1st SEM</option>
-                        <option value="2">2nd SEM</option>
-                        <option value="3">3rd SEM</option>
-                    </select>
-                    <div class="input-group-append">
-                        <label class="input-group-text" for="inputGroupSelect02">Options</label>
-                    </div>
-
-                </div>
-                </div>
-                
-            </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+    <div class="row">
+        <div class="col-sm-3">
+
+            <button type="button" onclick="#">Users</button>
+            <p>1 Million</p> 
+    
         </div>
+        <div class="col-sm-3">
+
+            <button type="button" onclick="#">Users</button>
+            <p>100 Million</p> 
+
+        </div>
+        <div class="col-sm-3">
+         
+            <button type="button" onclick="#">Users</button>
+            <p>10 Million</p> 
+         
+        </div>
+        <div class="col-sm-3">
         
-    </div>
+            <button type="button" onclick="#">Users</button>
+            <p>30%</p> 
+         
+        </div>
+      </div>
+
+        </div>
+    </div>  
+
     
     
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -171,12 +164,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
     
-    <?php
-        if(isset($_POST['submit'])){
-
-        }
-
-    ?>
+    
 </body>
 
 </html>
