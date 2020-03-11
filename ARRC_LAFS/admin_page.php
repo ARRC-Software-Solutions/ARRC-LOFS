@@ -5,7 +5,10 @@ session_start();
 if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
+
+
 }
+
 ?>
 <!DOCTYPE html>
 <html>

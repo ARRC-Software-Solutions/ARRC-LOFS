@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -37,7 +46,7 @@
                             <a href="tables.php">Tables</a>
                         </li>
                         <li>
-                            <a href="#">Overview</a>
+                            <a href="overview.php">Overview</a>
                         </li>
                         <li>
                             <a href="#">Details</a>
@@ -98,17 +107,8 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li> -->
                         </ul>
                     </div>
                 </div>

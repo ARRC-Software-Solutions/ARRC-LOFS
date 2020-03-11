@@ -1,3 +1,35 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
+    exit();
+}
+
+$servername = 'localhost';
+$username = 'root';
+$password = '1234';
+$dbname = 'db_lafts';
+$port=3306;
+$native_pass ='mysql_native_password';
+
+/*$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect-error){
+    die("Connection Failed: " . $conn->connect_error);
+}*/
+try {
+$conn = new PDO("mysql:host={$servername}; port={$port}; auth_plugin={$native_pass}; dbname={$dbname}", $username, $password);
+// set the PDO error mode to exception
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//echo "Connected successfully";
+}
+catch(PDOException $e)
+{
+echo "Connection failed: " . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -35,7 +67,7 @@
                             <a href="tables.php">Tables</a>
                         </li>
                         <li>
-                            <a href="#">Overview</a>
+                            <a href="overview.php">Overview</a>
                         </li>
                         <li>
                             <a href="#">Details</a>
@@ -96,65 +128,30 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li> -->
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            <form>
+            <form action='claim_record.php' method='post'>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                <label for="inputID">Student ID Number</label>
-                <input type="type" class="form-control" id="inputID" placeholder="e.g. 2018123456" required>
+                <label for="inputID">Claimant ID Number</label>
+                <input type="type" name="claimant_id" class="form-control" id="inputID" placeholder="e.g. 2018123456" required>
+                <label for="itemID">Item ID Number</label>
+                <input type="type" name="item_ID" class="form-control" id="itemID" placeholder="" required>
                 </div>
                 <div class="form-group col-md-6">
-                <label for="inputClaimant">Name of Claimant</label>
-                <input type="text" class="form-control" id="inputClaimant" required>
+                <label for="inputFClaimant">First Name</label>
+                <input type="text" name="firstN" class="form-control" id="inputClaimant" required>
+                <label for="inputLClaimant">Last Name</label>
+                <input type="text" name="lastN" class="form-control" id="inputClaimant" required>
                 </div>
             </div>
-            <!-- <div class="form-group">
-                <label for="inputDesc">Description</label>
-                <input type="text" class="form-control" id="inputDesc" required>
-            </div>
-            <div class="form-group">
-                <label for="inputDate">Date Found</label>
-                <input type="date" class="form-control" id="inputDate" placeholder="">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputSG">Security Guard</label>
-                <input type="text" class="form-control" id="inputSG" placeholder="lastname" required>
-                </div>
-                <div class="form-group col-md-4 ">
-                <label for="inputState">Semester</label>
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelect02" required>
-                        <option selected>Choose...</option>
-                        <option value="1">1st SEM</option>
-                        <option value="2">2nd SEM</option>
-                        <option value="3">3rd SEM</option>
-                    </select>
-                    <div class="input-group-append">
-                        <label class="input-group-text" for="inputGroupSelect02">Options</label>
-                    </div>
-
-                </div>
-                </div>
-                
-            </div> -->
             
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
         
@@ -171,7 +168,53 @@
     
     <?php
         if(isset($_POST['submit'])){
+            $claimant_ID = $_POST['claimant_id'];
+            $item_id = $_POST['item_ID'];
+            $first_name = $_POST['firstN'];
+            $last_name = $_POST['lastN'];
+            date_default_timezone_set("Asia/Manila");
+            $date_claimed = date("Y/m/d");
+            $time_claimed = date("h:ia");
+            $item_status = true;
+            $con=mysqli_connect("localhost","root","1234","db_lafts");
+            $check = mysqli_query($con, "SELECT * FROM tb_claimant WHERE claimaint_ID = '".$claimant_ID."' ");
+            // $result = mysqli_num_rows($check);
 
+            if ($check > 0){
+                $sql = "INSERT INTO tb_claimant (claimant_ID, first_name, last_name) 
+                VALUES ('$claimant_ID', '$first_name', '$last_name')";
+
+                $update_sql = "UPDATE tb_item 
+                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                WHERE item_ID = $item_id";
+
+            if ($conn->query($sql) == TRUE) {
+                output();
+            } 
+            else {
+                echo "Error: " . $sql . "<br>";
+            }
+
+            }else{
+                $update_sql = "UPDATE tb_item 
+                           SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                           WHERE item_ID = $item_id";
+            }
+        
+
+            
+
+            if ($conn->query($update_sql)== TRUE){
+                //echo "updated";
+            }
+			
+        }
+        function output(){
+            echo "<script type='text/javascript'>
+                        console.log('record created');
+                        
+                </script>";
+            
         }
 
     ?>
