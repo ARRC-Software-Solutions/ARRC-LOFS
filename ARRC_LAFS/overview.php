@@ -103,7 +103,6 @@ if (!isset($_SESSION['loggedin'])) {
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
                         <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
@@ -125,12 +124,88 @@ if (!isset($_SESSION['loggedin'])) {
 
             
     <div class="row1">
-            <button type="button" class="btn1 btn2" onclick="#">Users</button>
-            <button type="button" class="btn1 btn2" onclick="#">Users</button>
-            <button type="button" class="btn1 btn2" onclick="#">Users</button>
-            <button type="button" class="btn1 btn2" onclick="#">Users</button>   
-      </div>
+    <div class="row">
 
+        <div class="col-lg-4 col-sm-6 lg-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Items Found</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">200</div>
+                    </div>
+                  </div>
+                </div>    
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-lg-4 col-sm-6 lg-4">
+              <div class="card border-left-info shadow h-100 py-3">
+              <div class="callout">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Claimed</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">20%</div>
+                        </div>
+                        <div class="col">
+                          <div class="progress progress-sm mr-2">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-lg-4 col-sm-6 lg-4">
+              <div class="card border-left-info shadow h-100 py-3">
+              <div class="callout1">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Unclaimed</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
+                        </div>
+                        <div class="col">
+                          <div class="progress progress-sm mr-2">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-lg-7" id="stats">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Items Overview</h6>
+                  
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="myAreaChart" width="711" height="260" class="chartjs-render-monitor" style="display: block; width: 711px; height: 260px;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      </div>
         </div>
     </div>  
 
