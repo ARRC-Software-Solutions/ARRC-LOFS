@@ -15,7 +15,9 @@ p {
     line-height: 1.7em;
     color: #ffffff;
 }
-
+th {
+    width: 20px;
+}
 a,
 a:hover,
 a:focus {

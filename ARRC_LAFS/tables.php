@@ -11,7 +11,7 @@ if (!isset($_SESSION['loggedin'])) {
 <html>
 
 <head>
-    <link rel="icon" href="ARRCLogin/assets/ARRC-A.png" type="image/ico">
+ 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -99,7 +99,7 @@ if (!isset($_SESSION['loggedin'])) {
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
+                        
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
