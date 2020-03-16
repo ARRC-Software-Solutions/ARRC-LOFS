@@ -26,8 +26,8 @@ if (!isset($_SESSION['loggedin'])) {
     <link rel="stylesheet" href="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\css\bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style2.css">
-
-    <script src="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\js\bootstrap.min.js"></script>
+    
+    <!-- <script src="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\js\bootstrap.min.js"></script> -->
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
@@ -108,7 +108,7 @@ if (!isset($_SESSION['loggedin'])) {
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
+                        
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
