@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2020 at 01:00 PM
+-- Generation Time: Mar 16, 2020 at 01:12 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -74,6 +74,7 @@ CREATE TABLE `tb_security` (
 
 INSERT INTO `tb_security` (`security_ID`, `Username`, `first_name`, `last_name`, `password`) VALUES
 (0, 'test', 'test', 'test', '098f6bcd4621d373cade4e832627b4f6'),
+(1234, 'SG-Dubz', 'Lyle', 'Rallos', '81dc9bdb52d04dc20036dbd8313ed055'),
 (2018170411, 'SG-Kyrilios', 'Cyril ', 'Amoronio', '7200629b94bf95ef6e87140b8c2b5a8b');
 
 --

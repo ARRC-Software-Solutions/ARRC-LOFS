@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
 
                 $userName = $_POST['username'];
-                $newPassword = password_hash($_POST['nPassword']);
+                $newPassword = password_hash('password',$_POST['nPassword']);
                 $newUsername = $_POST['nUsername'];
 
                 $sql = "UPDATE accounts SET password=$newPassword SET username =  WHERE username = $userName";

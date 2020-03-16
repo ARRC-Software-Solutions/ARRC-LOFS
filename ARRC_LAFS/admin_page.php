@@ -84,7 +84,7 @@ if (!isset($_SESSION['loggedin'])) {
                             <a href="#">Page 1</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="\Myprojects\ARCprojects\guard_registration\index.php">Register User</a>
                         </li>
                         <li>
                             <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
@@ -117,7 +117,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:20"></a>
                             </li>
                         </ul>
                     </div>
