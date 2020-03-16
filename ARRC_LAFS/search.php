@@ -157,8 +157,10 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="goleft">
                 <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table...">
                 </div>
-                <!-- Number of rows -->
-                <form method='post' action='search.php' id="form">
+                <form method="post" action="search.php" id="form">
+                    
+                        <!-- Number of rows -->
+                
                     <div class="goright" >
                     
                         <span class="paginationtextfield">Number of rows:</span>&nbsp;
@@ -175,48 +177,56 @@ if (!isset($_SESSION['loggedin'])) {
                             ?>
                         </select>
                     </div>
-                </form>
-            <!-- </div> -->
-                    
+            
             <section>
                 <div>
                     <?php
                     
-                        
                     $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
-                
+                    $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
+                    $output = mysqli_query($conn,$sql);
+                    $fetchresult = $output->fetch_assoc();
+                    $allcount = $fetchresult['cntrows'];
+
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
                     }
                     
                     
-                        $row = 0;
-                        $rowperpage = 3;
-                        if(isset($_POST['num_rows'])){
-                            $rowperpage = intval($_POST['num_rows']);
+                    $row = 0;
+                    $rowperpage = 5;
+                   
+                    if(isset($_POST['num_rows'])){
+                        $rowperpage = intval($_POST['num_rows']);
 
-                        }
-                        // Previous Button
-                        if(isset($_POST['but_prev'])){
-                            $row = intval($_POST['row']);
-                            
-                            $row -= $rowperpage;
-                            
-                            if( $row < 0 ){
-                                $row = 0;
-                            }
-                            //echo $row;
-                        }
+                    }
 
-                        // Next Button
-                        if(isset($_POST['but_next'])){
+                    if ($allcount < $rowperpage){
+                        
+                    }
+                     // Previous Button
+                     if(isset($_POST['but_prev'])){
+                        $row = intval($_POST['row']);
+                        
+                        $row -= $rowperpage;
+                        
+                        if( $row < 0 ){
+                            $row = 0;
+                        }
+                        //echo $row;
+                    }
+
+                    // Next Button
+                    if(isset($_POST['but_next'])){
+                        
                             $row = intval($_POST['row']);
                             $allcount = $_POST['allcount'];
                             $val = $row + $rowperpage;
                             if( $val < $allcount ){
                                 $row = $val;
                             }
-                        }
+                        
+                    }
                     $columns = array('item_ID','item_Type','item_place', 'item_desc', 'item_dateFound', 'item_timeFound', 'item_security', 'item_semester', 'item_status');
                     
                     // Only get the column if it exists in the above columns array, if it doesn't exist the database table will be sorted by the first item in the columns array.
@@ -224,10 +234,8 @@ if (!isset($_SESSION['loggedin'])) {
                     
                     // Get the sort order for the column, ascending or descending, default is ascending.
                     $sort_order = isset($_POST['order']) && strtolower($_POST['order']) == 'desc' ? 'DESC' : 'ASC';
-                    $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
-                    $output = mysqli_query($conn,$sql);
-                    $fetchresult = $output->fetch_assoc();
-                    $allcount = $fetchresult['cntrows'];
+                    
+
                     
                     if ($result = $conn->query("SELECT * FROM tb_item ORDER BY " .  $column . ' ' . $sort_order . " LIMIT $row, " . $rowperpage)) {
                         // Some variables we need for the table.
@@ -239,7 +247,7 @@ if (!isset($_SESSION['loggedin'])) {
                         $res = true;
                         
                     ?>
-                    
+
                     <table class="table-responsive-sm" id="myTable">
                         <thead>
                         <tr>
@@ -271,14 +279,12 @@ if (!isset($_SESSION['loggedin'])) {
                         <?php endwhile; ?>
                     </table>
                 </div>
-                <form method="post" action="search.php" id="form">
-                    <div id="div_pagination">
+                <div id="div_pagination">
                         <input type="hidden" name="row" value="<?php echo $row; ?>">
                         <input type="hidden" name="allcount" value="<?php echo $allcount; ?>">
                         <input type="submit" class="button" name="but_prev" value="Previous">
-                        <input type="submit" class="button" name="but_next" value="Next">
-                        
-                    </div>
+                        <input type="submit" class="button" name="but_next" id="nxt" value="Next">
+                </div>
                 </form>
             </section>  
         </div>
