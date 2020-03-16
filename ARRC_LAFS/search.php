@@ -6,18 +6,19 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <link rel="icon" href="ARRCLogin/assets/ARRC-A.png" type="image/ico">
+    <link rel="icon" href="ARRC_LAFS/ARRC-A.png" type="image/ico">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+    
     <title>LOFS</title>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
@@ -114,10 +115,92 @@ if (!isset($_SESSION['loggedin'])) {
                 </div>
             </nav>
             <form class="form-inline my-2 my-lg-0">
-            <input size="110" class="form-control mr-sm-2" type="search" placeholder="Search">
+            <input size="110" class="form-control mr-sm-2" type="search" id="myInput" onkeyup="myFunction()" placeholder="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <script>
+                function myFunction() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[i];
+                    if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                    }       
+                }
+                }
+            </script>
             </form>
-            
+            <section>
+                <div>
+                    <!-- <table class="table-responsive table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:40px;"><a href="search.php?sort=item_id">Item ID</a></th>
+                                <th style="width:20px;"><a href="search.php?sort=item_Type">Item Type</a></th>
+                                <th style="width:20px;">Place</th>
+                                <th style="width:20px;">Item Description</th>
+                                <th style="width:20px;">Date Found</th>
+                                <th style="width:20px;">Time Found</th>
+                                <th style="width:20px;">Security Guard</th>
+                                <th style="width:20px;">Semester</th>
+                                <th style="width:20px;">Claimant ID</th>
+                                <th style="width:20px;">Item Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <?php
+                           
+                                
+                            $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
+                        
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }else{
+                                echo "connected";
+                            }
+                            
+                            
+                            $columns = array('item_ID','item_Type','item_room_no');
+                            
+                            // Only get the column if it exists in the above columns array, if it doesn't exist the database table will be sorted by the first item in the columns array.
+                            $column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
+                            
+                            // Get the sort order for the column, ascending or descending, default is ascending.
+                            $sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
+                            
+                            if ($result = $conn->query('SELECT * FROM tb_item ORDER BY ' .  $column . ' ' . $sort_order)) {
+                                // Some variables we need for the table.
+                                $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
+                                $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
+                                $add_class = ' class="highlight"';
+                            ?>
+                        </tbody>
+                    </table> -->
+                    <table class="table-responsive table table-hover" id="myTable">
+                        <tr>
+                            <th><a href="search.php?column=item_ID&order=<?php echo $asc_or_desc; ?>">Item ID<i class="fas fa-sort<?php echo $column == 'item_ID' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+                            <th><a href="search.php?column=item_Type&order=<?php echo $asc_or_desc; ?>">Type<i class="fas fa-sort<?php echo $column == 'item_Type' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+                            <th><a href="search.php?column=item_room_no&order=<?php echo $asc_or_desc; ?>">Place<i class="fas fa-sort<?php echo $column == 'item_room_no' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+                        </tr>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td<?php echo $column == 'item_ID' ? $add_class : ''; ?>><?php echo $row['item_ID']; ?></td>
+                            <td<?php echo $column == 'item_Type' ? $add_class : ''; ?>><?php echo $row['item_Type']; ?></td>
+                            <td<?php echo $column == 'item_room_no' ? $add_class : ''; ?>><?php echo $row['item_room_no']; ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+
+            </section>  
         </div>
     </div>
     
@@ -132,3 +215,7 @@ if (!isset($_SESSION['loggedin'])) {
 </body>
 
 </html>
+<?php
+	$result->free();
+}
+?>
