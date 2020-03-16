@@ -18,6 +18,7 @@ p {
 th {
     width: 20px;
 }
+
 a,
 a:hover,
 a:focus {
@@ -217,4 +218,21 @@ a.article:hover {
 
 .btn2:hover::before {
     height: 100%;
+}
+
+/* .container{
+    display: flex;
+    width: 100%;
+} */
+.goleft .goright{
+    display: inline-table;
+    box-sizing: border-box;
+    padding: 40px;
+}
+.goright{
+    margin-left: 40%;
+    float:right;
+}
+.goleft{
+    float:left;
 }
