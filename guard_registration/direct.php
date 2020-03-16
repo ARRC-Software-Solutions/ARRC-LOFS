@@ -53,7 +53,7 @@ if (!empty($username) || !empty($email) ||  !empty($password)) {
 conso
 <div class="alert alert-success1">"Account successfully created!" </div>
 
-<button class="btn btn-block1 btn-primary"  onclick="window.location.href = '//localhost/Myprojects/ARCprojects/guard_registration/index.php';">Create new account</button>
+<button class="btn btn-block1 btn-primary"  onclick="window.location.href = 'localhost/Myprojects/ARCprojects/ARRC_LAFS/admin_page.php';">Back</button>
     </center>
 
     
