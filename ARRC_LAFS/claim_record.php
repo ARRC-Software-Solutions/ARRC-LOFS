@@ -6,6 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }
+$_SESSION['itemID'];
 
 $servername = 'localhost';
 $username = 'root';
@@ -141,7 +142,11 @@ echo "Connection failed: " . $e->getMessage();
                 <label for="inputID">Claimant ID Number</label>
                 <input type="type" name="claimant_id" class="form-control" id="inputID" placeholder="e.g. 2018123456" required>
                 <label for="itemID">Item ID Number</label>
-                <input type="type" name="item_ID" class="form-control" id="itemID" placeholder="" required>
+                <input type="type" name="item_ID" class="form-control" id="itemID" value="<?php if(isset($_REQUEST['item_ID'])){
+                    echo $_REQUEST['item_ID'];
+                }else{
+                    echo "";
+                } ?>" placeholder="e.g. 20201111" required>
                 </div>
                 <div class="form-group col-md-6">
                 <label for="inputFClaimant">First Name</label>
@@ -167,6 +172,7 @@ echo "Connection failed: " . $e->getMessage();
     <script src="js/sidebar.js"></script>
     
     <?php
+   
         if(isset($_POST['submit'])){
             $claimant_ID = $_POST['claimant_id'];
             $item_id = $_POST['item_ID'];
