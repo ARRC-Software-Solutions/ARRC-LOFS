@@ -5,7 +5,7 @@ $_SESSION['message'] = 'Welcome!';
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '1234';
-$DATABASE_NAME = 'phplogin';
+$DATABASE_NAME = 'db_lafts';
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // }
 
     // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-    if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
+    if ($stmt = $con->prepare('SELECT id, password FROM tb_security WHERE username = ?')) {
         // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
         $stmt->bind_param('s', $_POST['username']);
         $stmt->execute();
@@ -69,6 +69,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+
+<?php
+// session_start();
+// $id = $_SESSION["id"];/* userid of the user */
+// $con = mysqli_connect('localhost','root','1234','db_lafts') or die('Unable To connect');
+// if(count($_POST)>0) {
+// $result = mysqli_query($con,"SELECT * from tb_security WHERE name='" . $id . "'");
+// $row=mysqli_fetch_array($result);
+// if($_POST["currentPassword"] == $row["password"] && $_POST["newPassword"] == $row["confirmPassword"] ) {
+// mysqli_query($con,"UPDATE student set password='" . $_POST["newPassword"] . "' WHERE name='" . $id . "'");
+// $message = "Password Changed Sucessfully";
+// } else{
+//  $message = "Password is not correct";
+// }
+// }
+?>
+
 
 
 <!DOCTYPE html>
