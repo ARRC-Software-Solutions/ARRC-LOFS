@@ -23,6 +23,7 @@
       <input type="text" placeholder="Last Name" name="lName" required />
 
       <input type="submit" value="Register" name="register" class="btn btn-block btn-primary" /><br><br>
+      <button onclick="window.location.href = '/Myprojects/ARCprojects/ARRC_LAFS/admin_page.php';">Back</button>
       
 
     </form>

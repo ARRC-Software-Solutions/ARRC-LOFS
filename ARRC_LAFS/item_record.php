@@ -122,7 +122,7 @@ if (!isset($_SESSION['loggedin'])) {
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
+                       
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
@@ -213,7 +213,7 @@ if (!isset($_SESSION['loggedin'])) {
             $semester = $_POST['semester'];
             $claimant_id = 0000000000;
             $status = false;
-			$sql = "INSERT INTO tb_item (item_ID, item_Type, item_room_no, item_desc, item_dateFound, item_timeFound, item_dateClaimed, item_timeClaimed, item_security, item_semester, claimant_ID, item_status) 
+			$sql = "INSERT INTO tb_item (item_ID, item_Type, item_place, item_desc, item_dateFound, item_timeFound, item_dateClaimed, item_timeClaimed, item_security, item_semester, claimant_ID, item_status) 
                 VALUES ('$id', '$type', '$room_no', '$item_desc', '$date_found', '$time_found', '$date_claimed', '$time_claimed', '$security', '$semester', '$claimant_id', '$status')";
 			
 			echo "New record created successfully";
