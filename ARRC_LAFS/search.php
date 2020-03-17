@@ -138,14 +138,14 @@ if (!isset($_SESSION['loggedin'])) {
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        
+                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
                     </button>
+                    <p class="banner1"> SEARCH</p> 
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">   
+                    <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
                                 <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
@@ -182,7 +182,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div>
                     <?php
                     
-                    $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
+                    $conn = mysqli_connect("localhost", "root", "", "db_lafts");
                     $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
                     $output = mysqli_query($conn,$sql);
                     $fetchresult = $output->fetch_assoc();

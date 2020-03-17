@@ -107,6 +107,7 @@ if (!isset($_SESSION['loggedin'])) {
                         <i class="fas fa-align-left"></i>
                         <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
                     </button>
+                    <p class="banner"> DASHBOARD</p>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
@@ -139,7 +140,7 @@ if (!isset($_SESSION['loggedin'])) {
               </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
+          
             <div class="col-lg-4 col-sm-6 lg-4">
               <div class="card border-left-info shadow h-100 py-3">
               <div class="callout">
@@ -164,7 +165,7 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
+          
             <div class="col-lg-4 col-sm-6 lg-4">
               <div class="card border-left-info shadow h-100 py-3">
               <div class="callout1">

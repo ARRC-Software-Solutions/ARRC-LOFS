@@ -10,7 +10,7 @@ if (!isset($_SESSION['loggedin'])) {
 
     $servername = 'localhost';
 	$username = 'root';
-	$password = '1234';
+	$password = '';
 	$dbname = 'db_lafts';
 	$port=3306;
 	$native_pass ='mysql_native_password';
@@ -122,8 +122,9 @@ if (!isset($_SESSION['loggedin'])) {
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                       
+                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
                     </button>
+                    <p class="banner1">ITEM RECORD</p>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>

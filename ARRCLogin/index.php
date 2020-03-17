@@ -4,13 +4,8 @@ $_SESSION['message'] = 'Welcome!';
 // Change this to your connection info.
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
-<<<<<<< HEAD
 $DATABASE_PASS = '';
-$DATABASE_NAME = 'accounts';
-=======
-$DATABASE_PASS = '1234';
 $DATABASE_NAME = 'db_lafts';
->>>>>>> e0e3bbf795323bb128d4e2cadf9479bdcafe42a3
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
