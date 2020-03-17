@@ -17,14 +17,25 @@ $(document).ready(function(){
 });
 });
 
-$(document).ready(function(){
+$("#read").click(function() {
 
-    // Number of rows selection
-    $("#num_rows").change(function(){
-
-        // Submitting form
-        $("#form").submit();
-
-    });
+    if($("#read").val()==0)
+    {
+     $("#read").val(1);
+    }
+    else
+    {
+     $("#read").val(0);
+    }
+    console.log($("#read").val());
+    
 });
 
+// $(".table input[name='checks']").change(function(){
+//     if($(this).is(":checked")){
+//       $(this).parents("tr:eq(0)").find(".hidden").show();
+//     }
+//     else{
+//       $(this).parents("tr:eq(0)").find(".hidden").hide();
+//     }
+// });

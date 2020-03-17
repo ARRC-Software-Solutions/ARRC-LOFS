@@ -4,7 +4,7 @@ $_SESSION['message'] = 'Welcome!';
 // Change this to your connection info.
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
-$DATABASE_PASS = '';
+$DATABASE_PASS = '1234';
 $DATABASE_NAME = 'db_lafts';
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

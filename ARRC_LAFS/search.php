@@ -34,8 +34,8 @@ if (!isset($_SESSION['loggedin'])) {
     
     #myTable {
         border-collapse: collapse;
-        width: 120%;
-        font-size: 16px;
+        width: 100%;
+        font-size: 13px;
         border:3px solid lavender;
         
     }
@@ -138,14 +138,14 @@ if (!isset($_SESSION['loggedin'])) {
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
+                        
                     </button>
-                    <p class="banner1"> SEARCH</p> 
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">   
-                    <ul class="nav navbar-nav ml-auto">
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
                                 <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
@@ -176,13 +176,17 @@ if (!isset($_SESSION['loggedin'])) {
                             }
                             ?>
                         </select>
+                        <div>
+                        
+                            <input style='margin-top: 20px;' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>>Show Claimed
+                        </div>
+                        
                     </div>
-            
-            <section>
+                            
                 <div>
                     <?php
                     
-                    $conn = mysqli_connect("localhost", "root", "", "db_lafts");
+                    $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
                     $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
                     $output = mysqli_query($conn,$sql);
                     $fetchresult = $output->fetch_assoc();
@@ -218,7 +222,7 @@ if (!isset($_SESSION['loggedin'])) {
 
                     // Next Button
                     if(isset($_POST['but_next'])){
-                        
+                            
                             $row = intval($_POST['row']);
                             $allcount = $_POST['allcount'];
                             $val = $row + $rowperpage;
@@ -230,14 +234,20 @@ if (!isset($_SESSION['loggedin'])) {
                     $columns = array('item_ID','item_Type','item_place', 'item_desc', 'item_dateFound', 'item_timeFound', 'item_security', 'item_semester', 'item_status');
                     
                     // Only get the column if it exists in the above columns array, if it doesn't exist the database table will be sorted by the first item in the columns array.
-                    $column = isset($_POST['column']) && in_array($_POST['column'], $columns) ? $_POST['column'] : $columns[0];
+                    $column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
+                    $sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
                     
-                    // Get the sort order for the column, ascending or descending, default is ascending.
-                    $sort_order = isset($_POST['order']) && strtolower($_POST['order']) == 'desc' ? 'DESC' : 'ASC';
-                    
+                    $sql_query = "SELECT * FROM tb_item";
+                    //echo ($_POST['checks']);
 
+                    if (empty($_POST['checks'])){
+                        $sql_query .= " WHERE item_status = 0 ";
+                    }else{
+                       
+                        $sql_query .= " WHERE item_status = 1 ";
+                    }
                     
-                    if ($result = $conn->query("SELECT * FROM tb_item ORDER BY " .  $column . ' ' . $sort_order . " LIMIT $row, " . $rowperpage)) {
+                    if ($result = $conn->query($sql_query . " ORDER BY " .  $column . ' ' . $sort_order . " LIMIT $row, " . $rowperpage)) {
                         // Some variables we need for the table.
                         
                         $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
@@ -249,7 +259,7 @@ if (!isset($_SESSION['loggedin'])) {
                     ?>
 
                     <table class="table-responsive-sm" id="myTable">
-                        <thead>
+                        <thead>>
                         <tr>
                             <th><a href="search.php?column=item_ID&order=<?php echo $asc_or_desc; ?>">Item ID <i class="fas fa-sort<?php echo $column == 'item_ID' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_Type&order=<?php echo $asc_or_desc; ?>">Type <i class="fas fa-sort<?php echo $column == 'item_Type' ? '-' . $up_or_down : ''; ?>"></i></a></th>
@@ -264,7 +274,7 @@ if (!isset($_SESSION['loggedin'])) {
                         </thead>
                         <?php while ($row = $result->fetch_assoc()): ?>
                         <tbody>
-                        <tr>
+                        <tr data-href='claim_record.php?item_ID=<?php $_SESSION['itemID'] = $row['item_ID']; echo $_SESSION['itemID']?>'>
                             <td<?php echo $column == 'item_ID' ? $add_class : ''; ?>><?php echo $row['item_ID']; ?></td>
                             <td<?php echo $column == 'item_Type' ? $add_class : ''; ?>><?php echo $row['item_Type']; ?></td>
                             <td<?php echo $column == 'item_place' ? $add_class : ''; ?>><?php echo $row['item_place']; ?></td>
@@ -273,7 +283,7 @@ if (!isset($_SESSION['loggedin'])) {
                             <td<?php echo $column == 'item_timeFound' ? $add_class : ''; ?>><?php echo $row['item_timeFound']; ?></td>
                             <td<?php echo $column == 'item_security' ? $add_class : ''; ?>><?php echo $row['item_security']; ?></td>
                             <td<?php echo $column == 'item_semester' ? $add_class : ''; ?>><?php echo $row['item_semester']; ?></td>
-                            <td<?php echo $column == 'item_status' ? $add_class : ''; ?>><?php if ($row['item_status'] == 0){$res = false; echo '<p style="color:red">';}else{$res=true; echo '<p style="color:blue">';}echo $converted_res = $res ? 'Claimed' : 'Unclaimed'; ?></td>
+                            <td<?php echo $column == 'item_status' ? $add_class : ''; ?>><?php if ($row['item_status'] == 0){$res = false; echo '<p style="color:red">';}else{$res=true; echo '<p style="color:blue">';}echo $converted_res = $res ? 'Claimed' : 'Unclaimed';?></td>
                         </tr>
                         </tbody>
                         <?php endwhile; ?>
@@ -286,7 +296,6 @@ if (!isset($_SESSION['loggedin'])) {
                         <input type="submit" class="button" name="but_next" id="nxt" value="Next">
                 </div>
                 </form>
-            </section>  
         </div>
     </div>
     
@@ -299,6 +308,8 @@ if (!isset($_SESSION['loggedin'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/liveSearch.js"></script>
+    <script src="js/searchLink.js"></script>
+    <script src="js/numRows.js"></script>
 </body>
 
 </html>

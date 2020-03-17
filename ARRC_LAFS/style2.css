@@ -282,21 +282,6 @@ body::-webkit-scrollbar {
     float:left;
 }
 
-.banner {
-    margin-bottom: .2rem;
-    font-size: 30px;
-    font-weight: 300;
-    line-height: 1.2;
-    font-family: monospace;
-    color: #263A66;
-}
-
-.banner1 {
-    margin-left: 30.5rem;
-    margin-bottom: .2rem;
-    font-size: 30px;
-    font-weight: 300;
-    line-height: 1.2;
-    font-family: monospace;
-    color: #263A66;
+[data-href] {
+    cursor: pointer;
 }
