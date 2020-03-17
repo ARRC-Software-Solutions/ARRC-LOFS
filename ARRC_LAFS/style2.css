@@ -18,6 +18,7 @@ p {
 th {
     width: 20px;
 }
+
 a,
 a:hover,
 a:focus {
@@ -219,6 +220,7 @@ a.article:hover {
     height: 100%;
 }
 
+<<<<<<< HEAD
 .callout {
     border-right: .25rem solid #1cc88a!important;
 }
@@ -264,3 +266,21 @@ body::-webkit-scrollbar {
     background-color: darkgrey;
     outline: 1px solid slategrey;
   }
+=======
+/* .container{
+    display: flex;
+    width: 100%;
+} */
+.goleft .goright{
+    display: inline-table;
+    box-sizing: border-box;
+    padding: 40px;
+}
+.goright{
+    margin-left: 40%;
+    float:right;
+}
+.goleft{
+    float:left;
+}
+>>>>>>> befdd800ea10a298cd9ace767e4e7a37ebdd45fe

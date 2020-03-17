@@ -35,10 +35,8 @@ if (!isset($_SESSION['loggedin'])) {
     #myTable {
         border-collapse: collapse;
         width: 120%;
-        
         font-size: 16px;
         border:3px solid lavender;
-        border-radius:3px;
         
     }
 
@@ -123,7 +121,7 @@ if (!isset($_SESSION['loggedin'])) {
                             <a href="#">Page 2</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                        <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
                         </li>
                     </ul>
                 </li>
@@ -155,65 +153,80 @@ if (!isset($_SESSION['loggedin'])) {
                     </div>
                 </div>
             </nav>
-            
-            <input size="100" class="form-control mr-sm-2" type="search" id="myInput" onkeyup="myFunction()" placeholder="Search">
-            <script>
-                function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[3];
+            <!-- <div class="container"> -->
+                <div class="goleft">
+                <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table...">
+                </div>
+                <form method="post" action="search.php" id="form">
                     
-                    if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                    }       
-                }
-                }
-            </script>
-           
+                        <!-- Number of rows -->
+                
+                    <div class="goright" >
+                    
+                        <span class="paginationtextfield">Number of rows:</span>&nbsp;
+                        <select id="num_rows" name="num_rows">
+                            <?php
+                            $numrows_arr = array("5","10","25","50","100","250");
+                            foreach($numrows_arr as $nrow){
+                                if(isset($_POST['num_rows']) && $_POST['num_rows'] == $nrow){
+                                    echo '<option value="'.$nrow.'" selected="selected">'.$nrow.'</option>';
+                                }else{
+                                    echo '<option value="'.$nrow.'">'.$nrow.'</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+            
             <section>
                 <div>
                     <?php
                     
-                        
                     $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
-                
+                    $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
+                    $output = mysqli_query($conn,$sql);
+                    $fetchresult = $output->fetch_assoc();
+                    $allcount = $fetchresult['cntrows'];
+
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
                     }
                     
-                    $rowperpage = 10;
-                        $row = 0;
+                    
+                    $row = 0;
+                    $rowperpage = 5;
+                   
+                    if(isset($_POST['num_rows'])){
+                        $rowperpage = intval($_POST['num_rows']);
 
-                        // Previous Button
-                        if(isset($_POST['but_prev'])){
-                            $row = intval($_POST['row']);
-                            
-                            $row -= $rowperpage;
-                            
-                            if( $row < 0 ){
-                                $row = 0;
-                            }
-                            //echo $row;
+                    }
+
+                    if ($allcount < $rowperpage){
+                        
+                    }
+                     // Previous Button
+                     if(isset($_POST['but_prev'])){
+                        $row = intval($_POST['row']);
+                        
+                        $row -= $rowperpage;
+                        
+                        if( $row < 0 ){
+                            $row = 0;
                         }
+                        //echo $row;
+                    }
 
-                        // Next Button
-                        if(isset($_POST['but_next'])){
+                    // Next Button
+                    if(isset($_POST['but_next'])){
+                        
                             $row = intval($_POST['row']);
                             $allcount = $_POST['allcount'];
                             $val = $row + $rowperpage;
                             if( $val < $allcount ){
                                 $row = $val;
                             }
-                        }
+                        
+                    }
                     $columns = array('item_ID','item_Type','item_place', 'item_desc', 'item_dateFound', 'item_timeFound', 'item_security', 'item_semester', 'item_status');
                     
                     // Only get the column if it exists in the above columns array, if it doesn't exist the database table will be sorted by the first item in the columns array.
@@ -221,12 +234,10 @@ if (!isset($_SESSION['loggedin'])) {
                     
                     // Get the sort order for the column, ascending or descending, default is ascending.
                     $sort_order = isset($_POST['order']) && strtolower($_POST['order']) == 'desc' ? 'DESC' : 'ASC';
-                    $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
-                    $output = mysqli_query($conn,$sql);
-                    $fetchresult = $output->fetch_assoc();
-                    $allcount = $fetchresult['cntrows'];
                     
-                    if ($result = $conn->query("SELECT * FROM tb_item ORDER BY " .  $column . ' ' . $sort_order . " LIMIT " . $rowperpage . " OFFSET ". $row)) {
+
+                    
+                    if ($result = $conn->query("SELECT * FROM tb_item ORDER BY " .  $column . ' ' . $sort_order . " LIMIT $row, " . $rowperpage)) {
                         // Some variables we need for the table.
                         
                         $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
@@ -236,8 +247,9 @@ if (!isset($_SESSION['loggedin'])) {
                         $res = true;
                         
                     ?>
-                    
+
                     <table class="table-responsive-sm" id="myTable">
+                        <thead>
                         <tr>
                             <th><a href="search.php?column=item_ID&order=<?php echo $asc_or_desc; ?>">Item ID <i class="fas fa-sort<?php echo $column == 'item_ID' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_Type&order=<?php echo $asc_or_desc; ?>">Type <i class="fas fa-sort<?php echo $column == 'item_Type' ? '-' . $up_or_down : ''; ?>"></i></a></th>
@@ -249,11 +261,13 @@ if (!isset($_SESSION['loggedin'])) {
                             <th><a href="search.php?column=item_semester&order=<?php echo $asc_or_desc; ?>">Semester <i class="fas fa-sort<?php echo $column == 'item_semester' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_status&order=<?php echo $asc_or_desc; ?>">Status <i class="fas fa-sort<?php echo $column == 'item_status' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                         </tr>
+                        </thead>
                         <?php while ($row = $result->fetch_assoc()): ?>
+                        <tbody>
                         <tr>
                             <td<?php echo $column == 'item_ID' ? $add_class : ''; ?>><?php echo $row['item_ID']; ?></td>
                             <td<?php echo $column == 'item_Type' ? $add_class : ''; ?>><?php echo $row['item_Type']; ?></td>
-                            <td style="padding-right:50px"<?php echo $column == 'item_place' ? $add_class : ''; ?>><?php echo $row['item_place']; ?></td>
+                            <td<?php echo $column == 'item_place' ? $add_class : ''; ?>><?php echo $row['item_place']; ?></td>
                             <td<?php echo $column == 'item_desc' ? $add_class : ''; ?>><?php echo $row['item_desc']; ?></td>
                             <td<?php echo $column == 'item_dateFound' ? $add_class : ''; ?>><?php echo $row['item_dateFound']; ?></td>
                             <td<?php echo $column == 'item_timeFound' ? $add_class : ''; ?>><?php echo $row['item_timeFound']; ?></td>
@@ -261,29 +275,30 @@ if (!isset($_SESSION['loggedin'])) {
                             <td<?php echo $column == 'item_semester' ? $add_class : ''; ?>><?php echo $row['item_semester']; ?></td>
                             <td<?php echo $column == 'item_status' ? $add_class : ''; ?>><?php if ($row['item_status'] == 0){$res = false; echo '<p style="color:red">';}else{$res=true; echo '<p style="color:blue">';}echo $converted_res = $res ? 'Claimed' : 'Unclaimed'; ?></td>
                         </tr>
+                        </tbody>
                         <?php endwhile; ?>
                     </table>
                 </div>
-                <form method="post" action="search.php" id="form">
-                    <div id="div_pagination">
+                <div id="div_pagination">
                         <input type="hidden" name="row" value="<?php echo $row; ?>">
                         <input type="hidden" name="allcount" value="<?php echo $allcount; ?>">
                         <input type="submit" class="button" name="but_prev" value="Previous">
-                        <input type="submit" class="button" name="but_next" value="Next">
-                    </div>
+                        <input type="submit" class="button" name="but_next" id="nxt" value="Next">
+                </div>
                 </form>
             </section>  
         </div>
     </div>
     
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/sidebar.js"></script>
-    
+    <script src="js/liveSearch.js"></script>
 </body>
 
 </html>
