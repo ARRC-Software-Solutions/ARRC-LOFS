@@ -4,7 +4,7 @@ $_SESSION['message'] = 'Welcome!';
 // Change this to your connection info.
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
-$DATABASE_PASS = '1234';
+$DATABASE_PASS = '';
 $DATABASE_NAME = 'db_lafts';
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Verification success! User has loggedin!
                 // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
                 
-                $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
+                $conn = mysqli_connect("localhost", "root", "", "db_lafts");
                 $result = mysqli_query($conn, "SELECT admin_status from tb_security WHERE password = '$password' ");
                 $adminIdentifier = mysqli_fetch_assoc($result);
 
