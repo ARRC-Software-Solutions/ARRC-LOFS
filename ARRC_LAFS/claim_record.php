@@ -6,7 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }
-
+$_SESSION['itemID'];
 
 $servername = 'localhost';
 $username = 'root';
@@ -15,7 +15,11 @@ $dbname = 'db_lafts';
 $port=3306;
 $native_pass ='mysql_native_password';
 
+/*$conn = new mysqli($servername, $username, $password, $dbname);
 
+if ($conn->connect-error){
+    die("Connection Failed: " . $conn->connect_error);
+}*/
 try {
 $conn = new PDO("mysql:host={$servername}; port={$port}; auth_plugin={$native_pass}; dbname={$dbname}", $username, $password);
 // set the PDO error mode to exception
@@ -52,7 +56,7 @@ echo "Connection failed: " . $e->getMessage();
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><a href="admin_page.php"><img src="assets/ARRC.png" alt="logo" width=200 height=75 ></a></h3>
+                <h3><a href="admin_page.php"><img src="ARRC.png" alt="logo" width=200 height=75 ></a></h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -61,12 +65,14 @@ echo "Connection failed: " . $e->getMessage();
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="tables.php">Produce Report</a>
+                            <a href="tables.php">Tables</a>
                         </li>
                         <li>
                             <a href="overview.php">Overview</a>
                         </li>
-                        
+                        <li>
+                            <a href="#">Details</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -91,7 +97,7 @@ echo "Connection failed: " . $e->getMessage();
                             <a href="#">Page 1</a>
                         </li>
                         <li>
-                            <a href="\Myprojects\ARCprojects\guard_registration\index.php">Register User</a>
+                            <a href="#">Page 2</a>
                         </li>
                         <li>
                         <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
@@ -123,7 +129,7 @@ echo "Connection failed: " . $e->getMessage();
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="assets/logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
                         </ul>
                     </div>
@@ -166,8 +172,7 @@ echo "Connection failed: " . $e->getMessage();
     <script src="js/sidebar.js"></script>
     
     <?php
-    
-    
+   
         if(isset($_POST['submit'])){
             $claimant_ID = $_POST['claimant_id'];
             $item_id = $_POST['item_ID'];
@@ -177,76 +182,36 @@ echo "Connection failed: " . $e->getMessage();
             $date_claimed = date("Y/m/d");
             $time_claimed = date("h:ia");
             $item_status = true;
-            $conn=mysqli_connect("localhost","root","1234","db_lafts");
-            $check = mysqli_query($conn, "SELECT * FROM tb_claimant");
-            $status = mysqli_query($conn, "SELECT * FROM tb_item");
-            
-            if ($check->num_rows){
-                while($row = $check->fetch_assoc()){
-                    while($row2 = $status->fetch_assoc()){
-                        if ($row2['item_status'] == 0){
-                            if ($row['Claimant_ID'] == $claimant_ID){
+            $con=mysqli_connect("localhost","root","1234","db_lafts");
+            $check = mysqli_query($con, "SELECT * FROM tb_claimant WHERE claimaint_ID = '".$claimant_ID."' ");
+            // $result = mysqli_num_rows($check);
 
-                                $update_sql = "UPDATE tb_item 
-                                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
-                                WHERE item_ID = $item_id";
-                                
-                                if ($conn->query($update_sql)== TRUE){
-                                    "<script type='text/javascript'>
-                                        alert('updated');
-                                        
-                                    </script>";
-                                }
-                                
-                            }else{
-                                $sql = "INSERT INTO tb_claimant (Claimant_ID, first_name, last_name) 
-                                VALUES ('$claimant_ID', '$first_name', '$last_name')";
-                                
-                                $update_sql = "UPDATE tb_item 
-                                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
-                                WHERE item_ID = $item_id";
+            if ($check > 0){
+                $sql = "INSERT INTO tb_claimant (claimant_ID, first_name, last_name) 
+                VALUES ('$claimant_ID', '$first_name', '$last_name')";
 
-                                if ($conn->query($sql) == TRUE) {
-                                    output();
-                                    "<script type='text/javascript'>
-                                        confirm('record created');
-                                        
-                                    </script>";
-                                } 
-                                else {
-                                    echo "Error: " . $sql . "<br>";
-                                }
-                            }
-                        }else{
-                        break;
-                            echo "<script type='text/javascript'>
-                                alert('already claimed');
-                                
-                            </script>";
-                            
-                            
-                           
-                        }
-                    }
-                }
+                $update_sql = "UPDATE tb_item 
+                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                WHERE item_ID = $item_id";
+
+            if ($conn->query($sql) == TRUE) {
+                output();
+            } 
+            else {
+                echo "Error: " . $sql . "<br>";
+            }
+
             }else{
-                $sql = "INSERT INTO tb_claimant (Claimant_ID, first_name, last_name) 
-                        VALUES ('$claimant_ID', '$first_name', '$last_name')";
-                        
-                        $update_sql = "UPDATE tb_item 
-                        SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
-                        WHERE item_ID = $item_id";
+                $update_sql = "UPDATE tb_item 
+                           SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                           WHERE item_ID = $item_id";
+            }
+        
 
-                        if ($conn->query($sql) == TRUE) {
-                            output();
-                        } 
-                        else {
-                            echo "Error: " . $sql . "<br>";
-                        }
-                        if ($conn->query($update_sql)== TRUE){
-                            echo "updated";
-                        }
-                echo "no rows were returned";
+            
+
+            if ($conn->query($update_sql)== TRUE){
+                //echo "updated";
             }
 			
         }

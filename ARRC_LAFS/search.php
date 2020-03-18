@@ -77,7 +77,7 @@ if (!isset($_SESSION['loggedin'])) {
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><a href="admin_page.php"><img src="assets/ARRC.png" alt="logo" width=200 height=75 ></a></h3>
+                <h3><a href="admin_page.php"><img src="ARRC.png" alt="logo" width=200 height=75 ></a></h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -86,12 +86,14 @@ if (!isset($_SESSION['loggedin'])) {
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="tables.php">Produce Report</a>
+                            <a href="tables.php">Tables</a>
                         </li>
                         <li>
                             <a href="overview.php">Overview</a>
                         </li>
-                        
+                        <li>
+                            <a href="#">Details</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -116,7 +118,7 @@ if (!isset($_SESSION['loggedin'])) {
                             <a href="#">Page 1</a>
                         </li>
                         <li>
-                            <a href="\Myprojects\ARCprojects\guard_registration\index.php">Register User</a>
+                            <a href="#">Page 2</a>
                         </li>
                         <li>
                         <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
@@ -145,7 +147,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="assets/logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
                         </ul>
                     </div>
@@ -153,18 +155,18 @@ if (!isset($_SESSION['loggedin'])) {
             </nav>
             <!-- <div class="container"> -->
                 <div class="goleft">
-                <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table..."/>
+                <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table...">
                 </div>
                 <form method="post" action="search.php" id="form">
                     
                         <!-- Number of rows -->
                 
-                    <div class="goright">
+                    <div class="goright" >
                     
                         <span class="paginationtextfield">Number of rows:</span>&nbsp;
                         <select id="num_rows" name="num_rows">
                             <?php
-                            $numrows_arr = array("5","10","25","50","100","250","500","1000");
+                            $numrows_arr = array("5","10","25","50","100","250");
                             foreach($numrows_arr as $nrow){
                                 if(isset($_POST['num_rows']) && $_POST['num_rows'] == $nrow){
                                     echo '<option value="'.$nrow.'" selected="selected">'.$nrow.'</option>';
@@ -176,7 +178,7 @@ if (!isset($_SESSION['loggedin'])) {
                         </select>
                         <div>
                         
-                            <input style='margin-top: 20px; margin-right:10px' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>/>Show Claimed Only
+                            <input style='margin-top: 20px;' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>>Show Claimed
                         </div>
                         
                     </div>
@@ -215,7 +217,7 @@ if (!isset($_SESSION['loggedin'])) {
                         if( $row < 0 ){
                             $row = 0;
                         }
-                        
+                        //echo $row;
                     }
 
                     // Next Button
@@ -236,7 +238,8 @@ if (!isset($_SESSION['loggedin'])) {
                     $sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
                     
                     $sql_query = "SELECT * FROM tb_item";
-                    
+                    //echo ($_POST['checks']);
+
                     if (empty($_POST['checks'])){
                         $sql_query .= " WHERE item_status = 0 ";
                     }else{
@@ -256,13 +259,13 @@ if (!isset($_SESSION['loggedin'])) {
                     ?>
 
                     <table class="table-responsive-sm" id="myTable">
-                        <thead>
+                        <thead>>
                         <tr>
                             <th><a href="search.php?column=item_ID&order=<?php echo $asc_or_desc; ?>">Item ID <i class="fas fa-sort<?php echo $column == 'item_ID' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_Type&order=<?php echo $asc_or_desc; ?>">Type <i class="fas fa-sort<?php echo $column == 'item_Type' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_place&order=<?php echo $asc_or_desc; ?>">Place <i class="fas fa-sort<?php echo $column == 'item_place' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_desc&order=<?php echo $asc_or_desc; ?>">Item description <i class="fas fa-sort<?php echo $column == 'item_desc' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th style="padding-right:20px"><a href="search.php?column=item_dateFound&order=<?php echo $asc_or_desc; ?>">Date Found <i class="fas fa-sort<?php echo $column == 'item_dateFound' ? '-' . $up_or_down : ''; ?>"></i></a></th>
+                            <th style="padding-right:20px"><a href="search.php?column=item_dateFound&order=<?php echo $asc_or_desc; ?>">Date Found <i class="fas fa-sort<?php echo $column == 'item_dateFound' ? '=-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_timeFound&order=<?php echo $asc_or_desc; ?>">Time Found <i class="fas fa-sort<?php echo $column == 'item_timeFound' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_security&order=<?php echo $asc_or_desc; ?>">Security Guard <i class="fas fa-sort<?php echo $column == 'item_security' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_semester&order=<?php echo $asc_or_desc; ?>">Semester <i class="fas fa-sort<?php echo $column == 'item_semester' ? '-' . $up_or_down : ''; ?>"></i></a></th>
@@ -286,7 +289,7 @@ if (!isset($_SESSION['loggedin'])) {
                         <?php endwhile; ?>
                     </table>
                 </div>
-                <div style="margin-top:20px" id="div_pagination">
+                <div id="div_pagination">
                         <input type="hidden" name="row" value="<?php echo $row; ?>">
                         <input type="hidden" name="allcount" value="<?php echo $allcount; ?>">
                         <input type="submit" class="button" name="but_prev" value="Previous">
