@@ -6,7 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }
-$_SESSION['itemID'];
+
 
 $servername = 'localhost';
 $username = 'root';
@@ -172,7 +172,8 @@ echo "Connection failed: " . $e->getMessage();
     <script src="js/sidebar.js"></script>
     
     <?php
-   
+    
+    
         if(isset($_POST['submit'])){
             $claimant_ID = $_POST['claimant_id'];
             $item_id = $_POST['item_ID'];
@@ -182,36 +183,76 @@ echo "Connection failed: " . $e->getMessage();
             $date_claimed = date("Y/m/d");
             $time_claimed = date("h:ia");
             $item_status = true;
-            $con=mysqli_connect("localhost","root","1234","db_lafts");
-            $check = mysqli_query($con, "SELECT * FROM tb_claimant WHERE claimaint_ID = '".$claimant_ID."' ");
-            // $result = mysqli_num_rows($check);
-
-            if ($check > 0){
-                $sql = "INSERT INTO tb_claimant (claimant_ID, first_name, last_name) 
-                VALUES ('$claimant_ID', '$first_name', '$last_name')";
-
-                $update_sql = "UPDATE tb_item 
-                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
-                WHERE item_ID = $item_id";
-
-            if ($conn->query($sql) == TRUE) {
-                output();
-            } 
-            else {
-                echo "Error: " . $sql . "<br>";
-            }
-
-            }else{
-                $update_sql = "UPDATE tb_item 
-                           SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
-                           WHERE item_ID = $item_id";
-            }
-        
-
+            $conn=mysqli_connect("localhost","root","1234","db_lafts");
+            $check = mysqli_query($conn, "SELECT * FROM tb_claimant");
+            $status = mysqli_query($conn, "SELECT * FROM tb_item");
             
+            if ($check->num_rows){
+                while($row = $check->fetch_assoc()){
+                    while($row2 = $status->fetch_assoc()){
+                        if ($row2['item_status'] == 0){
+                            if ($row['Claimant_ID'] == $claimant_ID){
 
-            if ($conn->query($update_sql)== TRUE){
-                //echo "updated";
+                                $update_sql = "UPDATE tb_item 
+                                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                                WHERE item_ID = $item_id";
+                                
+                                if ($conn->query($update_sql)== TRUE){
+                                    "<script type='text/javascript'>
+                                        alert('updated');
+                                        
+                                    </script>";
+                                }
+                                
+                            }else{
+                                $sql = "INSERT INTO tb_claimant (Claimant_ID, first_name, last_name) 
+                                VALUES ('$claimant_ID', '$first_name', '$last_name')";
+                                
+                                $update_sql = "UPDATE tb_item 
+                                SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                                WHERE item_ID = $item_id";
+
+                                if ($conn->query($sql) == TRUE) {
+                                    output();
+                                    "<script type='text/javascript'>
+                                        confirm('record created');
+                                        
+                                    </script>";
+                                } 
+                                else {
+                                    echo "Error: " . $sql . "<br>";
+                                }
+                            }
+                        }else{
+                        break;
+                            echo "<script type='text/javascript'>
+                                alert('already claimed');
+                                
+                            </script>";
+                            
+                            
+                           
+                        }
+                    }
+                }
+            }else{
+                $sql = "INSERT INTO tb_claimant (Claimant_ID, first_name, last_name) 
+                        VALUES ('$claimant_ID', '$first_name', '$last_name')";
+                        
+                        $update_sql = "UPDATE tb_item 
+                        SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
+                        WHERE item_ID = $item_id";
+
+                        if ($conn->query($sql) == TRUE) {
+                            output();
+                        } 
+                        else {
+                            echo "Error: " . $sql . "<br>";
+                        }
+                        if ($conn->query($update_sql)== TRUE){
+                            echo "updated";
+                        }
+                echo "no rows were returned";
             }
 			
         }

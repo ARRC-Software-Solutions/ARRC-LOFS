@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 
 }
-
+header('Location: overview.php');
 ?>
 <!DOCTYPE html>
 <html>

@@ -27,6 +27,13 @@ if (!isset($_SESSION['loggedin'])) {
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <style>
+            .chart-container {
+                width: 1000px;
+                height: auto;
+            }
+    </style>
 </head>
 
 <body>
@@ -105,7 +112,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span><img src="ARRC-A.png" alt="logo" width=24 height=24></span>
+                        
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
@@ -153,7 +160,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Claimed</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Claimed Items</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php
@@ -186,7 +193,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Unclaimed</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Unclaimed Item</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php 
@@ -220,7 +227,9 @@ if (!isset($_SESSION['loggedin'])) {
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <canvas id="myAreaChart" width="711" height="260" class="chartjs-render-monitor" style="display: block; width: 711px; height: 260px;"></canvas>
+                  <div class="chart-container">
+                    <canvas id="mycanvas" width="711" height="260" class="chartjs-render-monitor" style="display: block; width: 711px; height: 260px;"></canvas>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -233,12 +242,15 @@ if (!isset($_SESSION['loggedin'])) {
     
     
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="js/Chart.min.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/sidebar.js"></script>
+    <script src="js/linegraph.js"></script>
     
     
 </body>

@@ -258,13 +258,13 @@ if (!isset($_SESSION['loggedin'])) {
                     ?>
 
                     <table class="table-responsive-sm" id="myTable">
-                        <thead>>
+                        <thead>
                         <tr>
                             <th><a href="search.php?column=item_ID&order=<?php echo $asc_or_desc; ?>">Item ID <i class="fas fa-sort<?php echo $column == 'item_ID' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_Type&order=<?php echo $asc_or_desc; ?>">Type <i class="fas fa-sort<?php echo $column == 'item_Type' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_place&order=<?php echo $asc_or_desc; ?>">Place <i class="fas fa-sort<?php echo $column == 'item_place' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_desc&order=<?php echo $asc_or_desc; ?>">Item description <i class="fas fa-sort<?php echo $column == 'item_desc' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th style="padding-right:20px"><a href="search.php?column=item_dateFound&order=<?php echo $asc_or_desc; ?>">Date Found <i class="fas fa-sort<?php echo $column == 'item_dateFound' ? '=-' . $up_or_down : ''; ?>"></i></a></th>
+                            <th style="padding-right:20px"><a href="search.php?column=item_dateFound&order=<?php echo $asc_or_desc; ?>">Date Found <i class="fas fa-sort<?php echo $column == 'item_dateFound' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_timeFound&order=<?php echo $asc_or_desc; ?>">Time Found <i class="fas fa-sort<?php echo $column == 'item_timeFound' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_security&order=<?php echo $asc_or_desc; ?>">Security Guard <i class="fas fa-sort<?php echo $column == 'item_security' ? '-' . $up_or_down : ''; ?>"></i></a></th>
                             <th><a href="search.php?column=item_semester&order=<?php echo $asc_or_desc; ?>">Semester <i class="fas fa-sort<?php echo $column == 'item_semester' ? '-' . $up_or_down : ''; ?>"></i></a></th>
