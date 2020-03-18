@@ -10,6 +10,10 @@ $username = $_POST["username"];
 
 
 
+if(!isset($_POST['username'])){
+    $_SESSION['message'] = "Change Credentials";
+}
+else{
 
 
 // Create connection
@@ -18,9 +22,9 @@ $username = $_POST["username"];
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-	//userID='" . $_SESSION['userID'] . "'
 
-    $sql = "UPDATE tb_security SET password = '" . $_POST["newPassword"] . "' WHERE Username =  '" . $_POST["username"] . "'";
+
+    $sql = "UPDATE tb_security SET password = '$newPassword' WHERE Username =  '$username'";
 
     if ($conn->query($sql) == true) {
         $_SESSION['message'] = "Success";
@@ -28,7 +32,7 @@ $username = $_POST["username"];
         $_SESSION['message'] = "Failed updating record. Error:" .$conn->error;
     }
     $conn->close();
-
+}
 
 
 ?>

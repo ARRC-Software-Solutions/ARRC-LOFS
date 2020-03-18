@@ -22,6 +22,7 @@
       <input type="text" placeholder="First Name" name="fName" required />
       <input type="text" placeholder="Last Name" name="lName" required />
       <br> <br>
+      <input type="hidden" id="adminID" name="admin" value=0>
       <input type="checkbox" id="adminID" name="admin" value=1>
       <label for="admin">Admin Account</label><br> <br>
 
