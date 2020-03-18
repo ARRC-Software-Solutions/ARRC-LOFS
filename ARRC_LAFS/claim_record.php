@@ -91,7 +91,7 @@ echo "Connection failed: " . $e->getMessage();
                             <a href="#">Page 1</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="\Myprojects\ARCprojects\guard_registration\index.php">Register User</a>
                         </li>
                         <li>
                         <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
