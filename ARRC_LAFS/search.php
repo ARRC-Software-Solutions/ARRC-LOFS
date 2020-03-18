@@ -155,18 +155,18 @@ if (!isset($_SESSION['loggedin'])) {
             </nav>
             <!-- <div class="container"> -->
                 <div class="goleft">
-                <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table...">
+                <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table..."/>
                 </div>
                 <form method="post" action="search.php" id="form">
                     
                         <!-- Number of rows -->
                 
-                    <div class="goright" >
+                    <div class="goright">
                     
                         <span class="paginationtextfield">Number of rows:</span>&nbsp;
                         <select id="num_rows" name="num_rows">
                             <?php
-                            $numrows_arr = array("5","10","25","50","100","250");
+                            $numrows_arr = array("5","10","25","50","100","250","500","1000");
                             foreach($numrows_arr as $nrow){
                                 if(isset($_POST['num_rows']) && $_POST['num_rows'] == $nrow){
                                     echo '<option value="'.$nrow.'" selected="selected">'.$nrow.'</option>';
@@ -178,7 +178,7 @@ if (!isset($_SESSION['loggedin'])) {
                         </select>
                         <div>
                         
-                            <input style='margin-top: 20px;' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>>Show Claimed
+                            <input style='margin-top: 20px; margin-right:10px' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>/>Show Claimed Only
                         </div>
                         
                     </div>
@@ -217,7 +217,7 @@ if (!isset($_SESSION['loggedin'])) {
                         if( $row < 0 ){
                             $row = 0;
                         }
-                        //echo $row;
+                        
                     }
 
                     // Next Button
@@ -238,8 +238,7 @@ if (!isset($_SESSION['loggedin'])) {
                     $sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
                     
                     $sql_query = "SELECT * FROM tb_item";
-                    //echo ($_POST['checks']);
-
+                    
                     if (empty($_POST['checks'])){
                         $sql_query .= " WHERE item_status = 0 ";
                     }else{
@@ -289,7 +288,7 @@ if (!isset($_SESSION['loggedin'])) {
                         <?php endwhile; ?>
                     </table>
                 </div>
-                <div id="div_pagination">
+                <div style="margin-top:20px" id="div_pagination">
                         <input type="hidden" name="row" value="<?php echo $row; ?>">
                         <input type="hidden" name="allcount" value="<?php echo $allcount; ?>">
                         <input type="submit" class="button" name="but_prev" value="Previous">

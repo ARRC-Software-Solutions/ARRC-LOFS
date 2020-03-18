@@ -5,7 +5,7 @@ $_SESSION['message'] = 'Welcome!';
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '1234';
-$DATABASE_NAME = 'db_lafts';
+$DATABASE_NAME = 'phplogin';
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // }
 
     // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-    if ($stmt = $con->prepare('SELECT security_ID, password FROM tb_security WHERE Username = ?')) {
+    if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
         // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
         $stmt->bind_param('s', $_POST['username']);
         $stmt->execute();
@@ -35,14 +35,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->fetch();
             // Account exists, now we verify the password.
             // Note: remember to use password_hash in your registration file to store the hashed passwords.
-            if (md5($_POST['password'])) {
+            if (password_verify($_POST['password'], $password)) {
+                
                 // Verification success! User has loggedin!
                 // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
-                session_regenerate_id();
-                $_SESSION['loggedin'] = true;
-                $_SESSION['name'] = $_POST['username'];
-                $_SESSION['id'] = $id;
-                header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
+                // session_regenerate_id();
+                // $_SESSION['loggedin'] = true;
+                // $_SESSION['name'] = $_POST['username'];
+                // $_SESSION['id'] = $id;
+                //header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
+
+                $userName = $_POST['username'];
+                $newPassword = password_hash('password',$_POST['nPassword']);
+                $newUsername = $_POST['nUsername'];
+
+                $sql = "UPDATE accounts SET password=$newPassword SET username =  WHERE username = $userName";
+
+                if ($conn->query($sql) === true) {
+                    $_SESSION['message'] ="Record updated successfully";
+                } else {
+                    $_SESSION['message'] ="Error updating record: " . $conn->error;
+                }
+
             } else {
                 // echo 'Incorrect password!';
                 $_SESSION['message'] = "Incorrect Password";
@@ -51,45 +65,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // echo 'Incorrect username!';
             $_SESSION['message'] = "Incorrect Username";
         }
-
         $stmt->close();
     }
 }
 ?>
 
 
-
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<title>Login</title>
-	
-		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-		<link href="style.css" rel="stylesheet" type="text/css">
         <link rel="icon" href="assets/ARRC-A.png" type="image/ico">
-	</head>
-	<body>
+		<meta charset="utf-8">
+		<title>Change Credentials</title>
+	
+				<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+				<link href="style.css" rel="stylesheet" type="text/css">
+				</head>
+				<body>
 
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<div class="login">
-        <center>
-		<img class="mcmLogo" src="assets/mcmLogo.png" alt="MCM Logo" height = "150px">
-		<img class="mcmLogo" src="assets/ARRC-A.png" alt="MCM Logo" height = "150px">
-        </center>
+				<script src="bootstrap/js/bootstrap.min.js"></script>
+				<div class="login">
 
-			<form action="index.php" method="post">
+				<form action="changeCredentials.php" method="post">
 
-			<div class="alert alert"> <?= $_SESSION['message']?> </div>
+				<div class="alert alert"> <?= $_SESSION['message']?> </div>
 				<label for="username">
-					<i class="fas fa-user"></i>
+				<i class="fas fa-user"></i>
 				</label  >
-				<input type="text" name="username" placeholder="Username" id="username" >
+				<input type="text" name="username" placeholder="Old Username" id="username" >
 				<label for="password">
 					<i class="fas fa-lock"></i>
 				</label>
-				<input type="password" name="password" placeholder="Password" id="password" >
-				<input type="submit" value="Login">
+				<input type="password" name="password" placeholder="Old Password" id="password" >
+				<input type="text" name="username" placeholder="New Username" id="nUsername" >
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="New Password" id="nPassword" >
+				<input type="submit" value="Submit">
+				<button class = "btn" type="Submit" formaction= "\Myprojects\ARCprojects\ARRC_LAFS\admin_page.php">Back</button>
 			</form>
 		
 		</div>

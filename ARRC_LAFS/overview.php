@@ -132,7 +132,14 @@ if (!isset($_SESSION['loggedin'])) {
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Items Found</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">200</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <?php
+                      
+                      $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
+                      $result = mysqli_query($conn, "SELECT count(*) as total from tb_item");
+                      $data = mysqli_fetch_assoc($result);
+                      echo $data['total'];
+                       ?></div>
                     </div>
                   </div>
                 </div>    
@@ -149,11 +156,19 @@ if (!isset($_SESSION['loggedin'])) {
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Claimed</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">20%</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php
+                          $total = mysqli_query($conn, "SELECT count(*) as total from tb_item");
+                          $result = mysqli_query($conn, "SELECT count(*) as total2 from tb_item WHERE item_status = 1");
+                          $data = mysqli_fetch_assoc($result);
+                          $data2 = mysqli_fetch_assoc($total);
+                          $percentage = $data['total2']/100;
+                          echo $final = round(($data['total2'] / $data2['total'])* 100, 2);
+                           ?>%</div>
                         </div>
                         <div class="col">
                           <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $final; ?>%">
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -174,11 +189,17 @@ if (!isset($_SESSION['loggedin'])) {
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Unclaimed</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php 
+                          $total = mysqli_query($conn, "SELECT count(*) as total from tb_item");
+                          $result = mysqli_query($conn, "SELECT count(*) as total2 from tb_item WHERE item_status=0");
+                          $data = mysqli_fetch_assoc($result);
+                          $data2 = mysqli_fetch_assoc($total);
+                          echo $final = round(($data['total2'] / $data2['total'])* 100, 2);
+                       ?>%</div>
                         </div>
                         <div class="col">
                           <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-info" role="progressbar"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $final; ?>%"></div>
                           </div>
                         </div>
                       </div>

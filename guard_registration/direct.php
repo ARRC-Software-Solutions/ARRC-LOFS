@@ -9,18 +9,6 @@ $password = md5($_POST['password']);
 $fName = $_POST['fName'];
 $lName = $_POST['lName'];
 $securityID = $_POST['secID'];
-$adminStatus = $_POST['admin'];
-
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-    //form was submitted...let's DO this.
-
-    if (!isset($_POST['admin'])) {
-        // checkbox was not checked...do something
-        $adminStatus = 0;
-    } else {
-        $adminStatus = $_POST['admin'];
-    }
-}
 
 
 if (!empty($username) || !empty($email) ||  !empty($password)) {
@@ -41,20 +29,15 @@ if (!empty($username) || !empty($email) ||  !empty($password)) {
         {
          
             header("Location: //localhost/Myprojects/ARCprojects/guard_registration/error.php");
-         //   echo "<div class=alert alert-success1> </div>";
+            echo "<div class=alert alert-success1>User with the same ID already exists! </div>";
             exit;
         }
 
-        // if (isset($adminStatus)){
-        //     $adminStatus = 0;
-        // }
-        
-
-    $INSERT = "INSERT Into tb_security (security_ID, Username, first_name, last_name, password, admin_status) values(?,?, ?, ?, ?, ?)";
+    $INSERT = "INSERT Into tb_security (security_ID, Username, first_name, last_name, password) values(?, ?, ?, ?, ?)";
      //Prepare statement
      
       $stmt = $conn->prepare($INSERT);
-      $stmt->bind_param("ssssss", $securityID, $username,$fName,$lName, $password, $adminStatus);
+      $stmt->bind_param("sssss", $securityID, $username,$fName,$lName, $password);
       $stmt->execute();
      $stmt->close();
      $conn->close();
@@ -66,15 +49,11 @@ if (!empty($username) || !empty($email) ||  !empty($password)) {
  die();
 }
 ?>
-
-
 <br><br><br><br><br>
-<link rel="stylesheet" href="form.css" type="text/css">
-<h1><b> User Registration </b></h1>
+conso
+<div class="alert alert-success1">"Account successfully created!" </div>
 
-<div class="alert alert-success1">Account successfully created! </div>
-
-<button class="btn btn-block1 btn-primary"  onclick="window.location.href = '/Myprojects/ARCprojects/ARRC_LAFS/admin_page.php'">Back</button>
+<button class="btn btn-block1 btn-primary"  onclick="window.location.href = 'localhost/Myprojects/ARCprojects/ARRC_LAFS/admin_page.php';">Back</button>
     </center>
 
     
