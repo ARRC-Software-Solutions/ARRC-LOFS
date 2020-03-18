@@ -77,7 +77,7 @@ if (!isset($_SESSION['loggedin'])) {
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><a href="admin_page.php"><img src="ARRC.png" alt="logo" width=200 height=75 ></a></h3>
+                <h3><a href="admin_page.php"><img src="assets/ARRC.png" alt="logo" width=200 height=75 ></a></h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -145,7 +145,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="assets/logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
                         </ul>
                     </div>
