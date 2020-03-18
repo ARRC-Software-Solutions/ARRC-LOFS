@@ -87,7 +87,7 @@ if (!isset($_SESSION['loggedin'])) {
                             <a href="\Myprojects\ARCprojects\guard_registration\index.php">Register User</a>
                         </li>
                         <li>
-                            <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
+                            <a href="\Myprojects\ARCprojects\changeCredentials\index.php">Change password</a>
                         </li>
                     </ul>
                 </li>
