@@ -31,11 +31,3 @@ $("#read").click(function() {
     
 });
 
-// $(".table input[name='checks']").change(function(){
-//     if($(this).is(":checked")){
-//       $(this).parents("tr:eq(0)").find(".hidden").show();
-//     }
-//     else{
-//       $(this).parents("tr:eq(0)").find(".hidden").hide();
-//     }
-// });

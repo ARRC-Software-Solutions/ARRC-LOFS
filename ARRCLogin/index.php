@@ -14,13 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // die ('Failed to connect to MySQL: ' . mysqli_connect_error());
         $_SESSION['message'] =('Failed to connect to MySQL: ' . mysqli_connect_error());
     }
-    // Now we check if the data from the login form was submitted, isset() will check if the data exists.
-
-    // if ( !isset($_POST['username'], $_POST['password']) ) {
-    // 	// Could not get the data that should have been sent.
-    // 	// die ('Please fill both the username and password field!');
-    // 	$_SESSION['message'] = "Please fill both the username and password field!";
-    // }
 
     // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
     if ($stmt = $con->prepare('SELECT security_ID, password FROM tb_security WHERE Username = ?')) {
@@ -56,8 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
