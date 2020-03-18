@@ -15,11 +15,7 @@ $dbname = 'db_lafts';
 $port=3306;
 $native_pass ='mysql_native_password';
 
-/*$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect-error){
-    die("Connection Failed: " . $conn->connect_error);
-}*/
 try {
 $conn = new PDO("mysql:host={$servername}; port={$port}; auth_plugin={$native_pass}; dbname={$dbname}", $username, $password);
 // set the PDO error mode to exception
@@ -65,14 +61,12 @@ echo "Connection failed: " . $e->getMessage();
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="tables.php">Tables</a>
+                            <a href="tables.php">Produce Report</a>
                         </li>
                         <li>
                             <a href="overview.php">Overview</a>
                         </li>
-                        <li>
-                            <a href="#">Details</a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li>
