@@ -11,17 +11,6 @@ $lName = $_POST['lName'];
 $securityID = $_POST['secID'];
 $adminStatus = $_POST['admin'];
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-    //form was submitted...let's DO this.
-
-    if (!isset($_POST['admin'])) {
-        // checkbox was not checked...do something
-        $adminStatus = 0;
-    } else {
-        $adminStatus = $_POST['admin'];
-    }
-}
-
 
 if (!empty($username) || !empty($email) ||  !empty($password)) {
 
@@ -58,6 +47,7 @@ if (!empty($username) || !empty($email) ||  !empty($password)) {
       $stmt->execute();
      $stmt->close();
      $conn->close();
+     $_SESSION["message"] = "success";
 
 
     }
@@ -72,7 +62,7 @@ if (!empty($username) || !empty($email) ||  !empty($password)) {
 <link rel="stylesheet" href="form.css" type="text/css">
 <h1><b> User Registration </b></h1>
 
-<div class="alert alert-success1">Account successfully created! </div>
+<div class="alert alert-success1"><?=$_SESSION["message"] ?> </div>
 
 <button class="btn btn-block1 btn-primary"  onclick="window.location.href = '/Myprojects/ARCprojects/ARRC_LAFS/admin_page.php'">Back</button>
     </center>

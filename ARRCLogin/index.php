@@ -31,11 +31,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (md5($_POST['password'])== $password) {
                 // Verification success! User has loggedin!
                 // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
+                
+                $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
+                $result = mysqli_query($conn, "SELECT admin_status from tb_security WHERE password = '$password' ");
+                $adminIdentifier = mysqli_fetch_assoc($result);
+
+
+                $result = mysqli_query($conn,"SELECT admin_status as aStatus from tb_security WHERE password = '$password' ");
+                $data = mysqli_fetch_assoc($result);
+                 $data['aStatus'];
+           //     $_SESSION['message'] = "Incorrect Password";
+           //  echo $adminIdentifier;   
+           if (  $data['aStatus'] == 1){
+            session_regenerate_id();
+            $_SESSION['loggedin'] = true;
+            $_SESSION['name'] = $_POST['username'];
+            $_SESSION['id'] = $id;
+    
+            header('Location:\Myprojects\ARCprojects\ARRC_LAFS\admin_page.php');
+       //     echo $adminIdentifier;
+        }
+                if (  $data['aStatus'] == 0){
+                //echo "ajdnkajdn";
                 session_regenerate_id();
                 $_SESSION['loggedin'] = true;
                 $_SESSION['name'] = $_POST['username'];
-                $_SESSION['id'] = $id;
-                header('Location: \MyProjects\ARCprojects\ARRC_LAFS\admin_page.php');
+                $_SESSION['id'] = $id;    
+                header('Location: \Myprojects\ARCprojects\USER\ARRC_LAFS\admin_page.php');
+              //  header('www.facebook.com');
+                
+            }
+
+
+
             } else {
                 // echo 'Incorrect password!';
                 $_SESSION['message'] = "Incorrect Password";
