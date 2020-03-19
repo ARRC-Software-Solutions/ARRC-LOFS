@@ -26,7 +26,7 @@ if($searchValue != ''){
 }
 
 ## Total number of records without filtering
-$sel = mysqli_query($conn,"select count(*) as allcount from tb_item");
+$sel = mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
 $records = mysqli_fetch_assoc($sel);
 $totalRecords = $records['allcount'];
 

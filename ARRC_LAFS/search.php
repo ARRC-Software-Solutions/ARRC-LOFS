@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
 }
 include 'config.php';
 
-$status = mysqli_query($conn, "SELECT * FROM tb_item");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -161,6 +161,15 @@ $status = mysqli_query($conn, "SELECT * FROM tb_item");
                     </div>
                 </div>
             </nav>
+            
+            <!-- <form action='search.php' method='post'>
+            <div>  
+                <input style='margin-top: 20px; margin-right:10px' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>/>Show Claimed Only
+            </div>
+                        
+           
+
+             </form> -->
             <table id="myTable" class="display dataTable">
             <thead>
                 <tr>
@@ -182,6 +191,9 @@ $status = mysqli_query($conn, "SELECT * FROM tb_item");
                             'serverSide': true,
                             'serverMethod': 'POST',
                             'idSrc' : "id",
+                            'info' : true,
+                            'ordering': true,
+                            'scrollY': "400px",
                             'ajax': {
                                 'url':'ajaxfile.php',
                                 'dataSRC': ""
@@ -213,7 +225,19 @@ $status = mysqli_query($conn, "SELECT * FROM tb_item");
                                 "order": [[1, 'asc']]
                                
                         });
+                        
+                   
                         $(document).ready(function($) {
+                            
+                            $('a.toggle-vis').on( 'click', function (e) {
+                                e.preventDefault();
+                        
+                                // Get the column API object
+                                var column = table.column( $(this).attr('data-column') );
+                        
+                                // Toggle the visibility
+                                column.visible( ! column.visible() );
+                            } );
                             $('#myTable').on('click', 'tr', function ()
                             {
                                 // var id = table.row( this ).data().id;
@@ -232,8 +256,7 @@ $status = mysqli_query($conn, "SELECT * FROM tb_item");
                     </script>
                 </table>
            
-    
-	
+                        
 	
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script> -->
