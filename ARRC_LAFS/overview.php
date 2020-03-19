@@ -53,14 +53,12 @@ $sql =  mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="tables.php">Tables</a>
+                            <a href="generate_pds.php">Produce Report</a>
                         </li>
                         <li>
                             <a href="overview.php">Overview</a>
                         </li>
-                        <li>
-                            <a href="#">Details</a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li>
@@ -89,7 +87,7 @@ $sql =  mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
                             <a href="#">Page 1</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                          <a href="\Myprojects\ARCprojects\guard_registration\index.php">Register User</a>
                         </li>
                         <li>
                             <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>

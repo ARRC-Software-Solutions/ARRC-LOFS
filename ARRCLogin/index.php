@@ -4,7 +4,7 @@ $_SESSION['message'] = 'Welcome!';
 // Change this to your connection info.
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
-$DATABASE_PASS = '';
+$DATABASE_PASS = '1234';
 $DATABASE_NAME = 'db_lafts';
 // Try and connect using the info above.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['name'] = $_POST['username'];
             $_SESSION['id'] = $id;
     
-            header('Location:\Myprojects\ARCprojects\ARRC_LAFS\admin_page.php');
+            header('Location:\Myprojects\ARCprojects\ARRC_LAFS\overview.php');
        //     echo $adminIdentifier;
         }
                 if (  $data['aStatus'] == 0){
