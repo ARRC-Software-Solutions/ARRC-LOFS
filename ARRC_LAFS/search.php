@@ -237,18 +237,14 @@ include 'config.php';
                         
                                 // Toggle the visibility
                                 column.visible( ! column.visible() );
-                            } );
+                            });
+                            
                             $('#myTable').on('click', 'tr', function ()
                             {
-                                // var id = table.row( this ).data().id;
                                 var rows = table.rows(this).indexes();
                                 var selectedData = table.cell(rows, 0).data();
-                                
-                                console.log( selectedData);
-                                //alert('Clicked row id '+id );
-                                // 'this' refers to the current <td>, if you need information out of it
                                 document.location.href = "claim_record.php?item_ID=" + selectedData;
-                                //window.open('claim_record.php');
+                                
                             });
                            
                         });

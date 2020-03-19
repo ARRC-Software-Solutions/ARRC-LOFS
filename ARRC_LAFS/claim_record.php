@@ -179,14 +179,16 @@ echo "Connection failed: " . $e->getMessage();
             $item_status = true;
             $conn=mysqli_connect("localhost","root","1234","db_lafts");
             $check = mysqli_query($conn, "SELECT * FROM tb_claimant");
-            $status = mysqli_query($conn, "SELECT * FROM tb_item");
+            $status = mysqli_query($conn, "SELECT * FROM tb_item WHERE item_status = 0");
             
             if ($check->num_rows){
+                
                 while($row = $check->fetch_assoc()){
                     while($row2 = $status->fetch_assoc()){
+                        echo $row2['item_status'];
                         if ($row2['item_status'] == 0){
+                            
                             if ($row['Claimant_ID'] == $claimant_ID){
-
                                 $update_sql = "UPDATE tb_item 
                                 SET item_dateClaimed = '$date_claimed', item_timeClaimed = '$time_claimed', claimant_ID = '$claimant_ID', item_status= '$item_status' 
                                 WHERE item_ID = $item_id";
@@ -196,9 +198,15 @@ echo "Connection failed: " . $e->getMessage();
                                         alert('updated');
                                         
                                     </script>";
+                                
                                 }
+                                if ($conn->query($update_sql)== TRUE){
+                                    echo "updated";
+                                }
+                            break;
                                 
                             }else{
+                                echo "hit2";
                                 $sql = "INSERT INTO tb_claimant (Claimant_ID, first_name, last_name) 
                                 VALUES ('$claimant_ID', '$first_name', '$last_name')";
                                 
@@ -208,21 +216,29 @@ echo "Connection failed: " . $e->getMessage();
 
                                 if ($conn->query($sql) == TRUE) {
                                     output();
+                                
                                     "<script type='text/javascript'>
                                         confirm('record created');
                                         
                                     </script>";
+                                    
                                 } 
                                 else {
                                     echo "Error: " . $sql . "<br>";
                                 }
+                                if ($conn->query($update_sql)== TRUE){
+                                    echo "updated";
+                                }
+                            break;
                             }
                         }else{
-                        break;
+                        
                             echo "<script type='text/javascript'>
-                                alert('already claimed');
-                                
-                            </script>";
+                            alert('already claimed');
+                            
+                        </script>";
+                            
+                    break;
                             
                             
                            
@@ -239,6 +255,7 @@ echo "Connection failed: " . $e->getMessage();
 
                         if ($conn->query($sql) == TRUE) {
                             output();
+                            echo "hit";
                         } 
                         else {
                             echo "Error: " . $sql . "<br>";
@@ -246,7 +263,9 @@ echo "Connection failed: " . $e->getMessage();
                         if ($conn->query($update_sql)== TRUE){
                             echo "updated";
                         }
+                    
                 echo "no rows were returned";
+            
             }
 			
         }

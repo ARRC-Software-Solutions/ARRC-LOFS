@@ -1,39 +1,41 @@
 <?php
-
+include 'config.php';
 session_start();
 
 if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }
+
+$sql =  mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-   
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>LOFS</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\css\bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style2.css">
 
-    
+    <script src="\Myprojects\ARCprojects\ARRC_LAFS\bootstrap-4.4.1-dist\js\bootstrap.min.js"></script>
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
     <style>
-            .chart-container {
-                width: 1000px;
-                height: auto;
-            }
+      .chart-container {
+        width: 1000px;
+        height: auto;
+      }
     </style>
+
 </head>
 
 <body>
@@ -46,17 +48,19 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
 
             <ul class="list-unstyled components">
-                <p>User</p>
+                <p>Admin</p>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="tables.php">Produce Report</a>
+                            <a href="tables.php">Tables</a>
                         </li>
                         <li>
                             <a href="overview.php">Overview</a>
                         </li>
-                        
+                        <li>
+                            <a href="#">Details</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -84,14 +88,19 @@ if (!isset($_SESSION['loggedin'])) {
                         <li>
                             <a href="#">Page 1</a>
                         </li>
-
                         <li>
-                        <a href="\Myprojects\ARCprojects\changeCredentials\index.php">Change password</a>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="\Myprojects\ARCprojects\ARRCLogin\changeCredentials.php">Change username/password</a>
                         </li>
                     </ul>
                 </li>
 
-          
+                
+                <!-- <li>
+                    <a href="#">Contact</a>
+                </li> -->
             </ul>
 
         </nav>
@@ -107,6 +116,7 @@ if (!isset($_SESSION['loggedin'])) {
                         <i class="fas fa-align-left"></i>
                         
                     </button>
+                    <p class="banner"> DASHBOARD</p>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
@@ -114,7 +124,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="assets/logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:20"></a>
+                                <a class="nav-link" href="\MyProjects\ARCprojects\ARRCLogin\logout.php" name=logout onclick="return confirm('Are you sure to logout?');"><img src="assets/logoutbtn.png" alt="icon" width=24 height=24 style="margin-right:"></a>
                             </li>
                         </ul>
                     </div>
@@ -132,43 +142,34 @@ if (!isset($_SESSION['loggedin'])) {
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Items Found</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      <?php
-                      
-                      $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
-                      $result = mysqli_query($conn, "SELECT count(*) as total from tb_item");
-                      $data = mysqli_fetch_assoc($result);
-                      echo $data['total'];
-                       ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php $item_no = $sql->fetch_assoc(); echo intval($item_no['allcount']);?></div>
                     </div>
                   </div>
                 </div>    
               </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
+          
             <div class="col-lg-4 col-sm-6 lg-4">
               <div class="card border-left-info shadow h-100 py-3">
               <div class="callout">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Claimed Items</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Claimed</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php
-                          $total = mysqli_query($conn, "SELECT count(*) as total from tb_item");
-                          $result = mysqli_query($conn, "SELECT count(*) as total2 from tb_item WHERE item_status = 1");
-                          $data = mysqli_fetch_assoc($result);
-                          $data2 = mysqli_fetch_assoc($total);
-                          $percentage = $data['total2']/100;
-                          echo $final = round(($data['total2'] / $data2['total'])* 100, 2);
-                           ?>%</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                          <?php 
+                          $result = mysqli_query($conn, "SELECT count(*) as allcount2 FROM tb_item WHERE item_status=true"); 
+                          $row = $result->fetch_assoc();
+                          $total = (intval($row['allcount2']) / intval($item_no['allcount'])) * 100;
+                          echo $total;
+                          ?> %</div>
                         </div>
                         <div class="col">
                           <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $final; ?>%">
-                            </div>
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $total; ?>%"></div>
                           </div>
                         </div>
                       </div>
@@ -179,27 +180,26 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
+          
             <div class="col-lg-4 col-sm-6 lg-4">
               <div class="card border-left-info shadow h-100 py-3">
               <div class="callout1">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Unclaimed Item</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Items Unclaimed</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php 
-                          $total = mysqli_query($conn, "SELECT count(*) as total from tb_item");
-                          $result = mysqli_query($conn, "SELECT count(*) as total2 from tb_item WHERE item_status=0");
-                          $data = mysqli_fetch_assoc($result);
-                          $data2 = mysqli_fetch_assoc($total);
-                          echo $final = round(($data['total2'] / $data2['total'])* 100, 2);
-                       ?>%</div>
+                          $result = mysqli_query($conn, "SELECT count(*) as allcount2 FROM tb_item WHERE item_status=false"); 
+                          $row = $result->fetch_assoc();
+                          $total = (intval($row['allcount2']) / intval($item_no['allcount'])) * 100;
+                          echo $total;
+                          ?> %</div>
                         </div>
                         <div class="col">
                           <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $final; ?>%"></div>
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $total; ?>%"></div>
                           </div>
                         </div>
                       </div>
@@ -218,11 +218,9 @@ if (!isset($_SESSION['loggedin'])) {
                   
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="class="chart-container>
                   <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                  <div class="chart-container">
-                    <canvas id="mycanvas" width="711" height="260" class="chartjs-render-monitor" style="display: block; width: 711px; height: 260px;"></canvas>
-                  </div>
+                    <canvas id="mycanvas"></canvas>
                   </div>
                 </div>
               </div>
@@ -235,14 +233,15 @@ if (!isset($_SESSION['loggedin'])) {
     
     
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <script src="js/Chart.min.js"></script>
-    <script src="js/jquery-3.4.1.min.js"></script>
+
+    
     <script src="js/sidebar.js"></script>
+    <script src="js/Chart.min.js"></script>
     <script src="js/linegraph.js"></script>
     
     
