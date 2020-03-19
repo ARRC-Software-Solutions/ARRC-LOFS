@@ -67,7 +67,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="generate_pds.php">Produce Report</a>
+                            <a href="tables.php">Produce Report</a>
                         </li>
                         <li>
                             <a href="overview.php">Overview</a>

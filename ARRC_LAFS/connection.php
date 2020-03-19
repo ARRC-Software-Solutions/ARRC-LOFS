@@ -3,7 +3,7 @@ Class dbObj{
     /* Database connection start */
     var $dbhost = "localhost";
     var $username = "root";
-    var $password = "";
+    var $password = "1234";
     var $dbname = "db_lafts";
     var $conn;
     function getConnstring() {

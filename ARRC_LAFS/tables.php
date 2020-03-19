@@ -115,7 +115,7 @@ if (!isset($_SESSION['loggedin'])) {
             <div class="container" style="padding-top:50px">
             <h2>Generate PDF file from MySQL Using PHP</h2>
             <form class="form-inline" method="post" action="generate_pdf.php">
-            <button type="submit" id="pdf" name="generate_pdf" class="btn btn-primary"><i class="fa fa-pdf"" aria-hidden="true"></i>
+            <button type="submit" id="pdf" name="generate_pdf" class="btn btn-primary"><i class="fa fa-pdf" aria-hidden="true"></i>
             Generate PDF</button>
             </form>
             </fieldset>
