@@ -37,7 +37,7 @@ $totalRecordwithFilter = $records2['allcount2'];
 
 
 ## Fetch records
-$empQuery = "select * from tb_item WHERE 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
+$empQuery = "SELECT * from tb_item WHERE item_status=0 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
 $empRecords = mysqli_query($conn, $empQuery);
 $data = array();
 

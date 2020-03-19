@@ -185,7 +185,7 @@ echo "Connection failed: " . $e->getMessage();
                 
                 while($row = $check->fetch_assoc()){
                     while($row2 = $status->fetch_assoc()){
-                        echo $row2['item_status'];
+                        
                         if ($row2['item_status'] == 0){
                             
                             if ($row['Claimant_ID'] == $claimant_ID){
@@ -200,13 +200,11 @@ echo "Connection failed: " . $e->getMessage();
                                     </script>";
                                 
                                 }
-                                if ($conn->query($update_sql)== TRUE){
-                                    echo "updated";
-                                }
+                               
                             break;
                                 
                             }else{
-                                echo "hit2";
+                                
                                 $sql = "INSERT INTO tb_claimant (Claimant_ID, first_name, last_name) 
                                 VALUES ('$claimant_ID', '$first_name', '$last_name')";
                                 

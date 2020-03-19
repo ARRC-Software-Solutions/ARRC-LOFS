@@ -21,7 +21,7 @@ $.ajax({
         }
 
         var chartdata = {
-            labels: item_ID,
+            labels: item_status,
             datasets: [
                 {
                     label: "1 = Claimed, 0 = Unclaimed",
@@ -49,7 +49,7 @@ $.ajax({
         var ctx = $("#mycanvas");
 
         var LineGraph = new Chart(ctx, {
-            type: 'line',
+            type: 'pie',
             data: chartdata
         });
     },

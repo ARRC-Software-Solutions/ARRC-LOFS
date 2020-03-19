@@ -161,7 +161,7 @@ $sql =  mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
                           <?php 
                           $result = mysqli_query($conn, "SELECT count(*) as allcount2 FROM tb_item WHERE item_status=true"); 
                           $row = $result->fetch_assoc();
-                          $total = (intval($row['allcount2']) / intval($item_no['allcount'])) * 100;
+                          $total = round((intval($row['allcount2']) / intval($item_no['allcount'])) * 100, 2);
                           echo $total;
                           ?> %</div>
                         </div>
@@ -191,7 +191,7 @@ $sql =  mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php 
                           $result = mysqli_query($conn, "SELECT count(*) as allcount2 FROM tb_item WHERE item_status=false"); 
                           $row = $result->fetch_assoc();
-                          $total = (intval($row['allcount2']) / intval($item_no['allcount'])) * 100;
+                          $total = round((intval($row['allcount2']) / intval($item_no['allcount'])) * 100, 2);
                           echo $total;
                           ?> %</div>
                         </div>

@@ -26,7 +26,7 @@ if($searchValue != ''){
 }
 
 ## Total number of records without filtering
-$sel = mysqli_query($conn,"SELECT count(*) as allcount from tb_item");
+$sel = mysqli_query($conn,"SELECT count(*) as allcount from tb_item WHERE item_status=1");
 $records = mysqli_fetch_assoc($sel);
 $totalRecords = $records['allcount'];
 
@@ -37,7 +37,7 @@ $totalRecordwithFilter = $records2['allcount2'];
 
 
 ## Fetch records
-$empQuery = "select * from tb_item WHERE 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
+$empQuery = "select * from tb_item WHERE item_status=0 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
 $empRecords = mysqli_query($conn, $empQuery);
 $data = array();
 

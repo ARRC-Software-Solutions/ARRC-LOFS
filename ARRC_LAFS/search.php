@@ -198,9 +198,6 @@ include 'config.php';
                                 'url':'ajaxfile.php',
                                 'dataSRC': ""
                             },
-                            
-                           
-
                             'columns': [
                                 
                                 { sTitle: "ID", data: 'item_ID' },
@@ -215,18 +212,11 @@ include 'config.php';
                                 
                                 { data: 'item_status', mRender: function(data, type, row){
                                     return (data == 1) ? "Claimed" : "Unclaimed";
-                                }},
-                                
-                                
-                            
+                                }},             
                                 ],
-                                
+                              "order": [[1, 'asc']]
                                
-                                "order": [[1, 'asc']]
-                               
-                        });
-                        
-                   
+                        });        
                         $(document).ready(function($) {
                             
                             $('a.toggle-vis').on( 'click', function (e) {
