@@ -6,8 +6,9 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: \MyProjects\ARCprojects\ARRCLogin\index.php');
     exit();
 }
+include 'config.php';
 
-    
+$status = mysqli_query($conn, "SELECT * FROM tb_item");
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,15 @@ if (!isset($_SESSION['loggedin'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <title>LOFS</title>
+   
+    <link rel= "stylesheet" type="text/css" href="DataTables/datatables.min.css" >
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel= "stylesheet" type="text/css" href="DataTables/datatables.min.js" >
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script> 
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -151,166 +161,96 @@ if (!isset($_SESSION['loggedin'])) {
                     </div>
                 </div>
             </nav>
-            <!-- <div class="container"> -->
-                <div class="goleft">
-                <input type="search" class="form-control pull-right" style="width:200%; margin-bottom: 20%;" id="search" placeholder="Type to search table..."/>
-                </div>
-                <form method="post" action="search.php" id="form">
-                    
-                        <!-- Number of rows -->
-                
-                    <div class="goright">
-                    
-                        <span class="paginationtextfield">Number of rows:</span>&nbsp;
-                        <select id="num_rows" name="num_rows">
-                            <?php
-                            $numrows_arr = array("5","10","25","50","100","250","500","1000");
-                            foreach($numrows_arr as $nrow){
-                                if(isset($_POST['num_rows']) && $_POST['num_rows'] == $nrow){
-                                    echo '<option value="'.$nrow.'" selected="selected">'.$nrow.'</option>';
-                                }else{
-                                    echo '<option value="'.$nrow.'">'.$nrow.'</option>';
-                                }
-                            }
-                            ?>
-                        </select>
-                        <div>
-                        
-                            <input style='margin-top: 20px; margin-right:10px' type="checkbox" autocomplete="off" id="read" name="checks" value="0" onchange="this.form.submit()" <?php if (isset($_POST['checks'])){echo "checked='checked'";} ?>/>Show Claimed Only
-                        </div>
-                        
-                    </div>
+            <table id="myTable" class="display dataTable">
+            <thead>
+                <tr>
+                <th>Item ID</th>
+                <th>Type</th>
+                <th>Place</th>
+                <th>Item Description</th>
+                <th>Date Found</th>
+                <th>Time Found</th>
+                <th>Security</th>
+                <th>Semester</th>
+                <th>Status</th>
+                </tr>
+            </thead>
+            <script>
+                        $(document).ready(function(){
+                        var table =$('#myTable').DataTable({
+                            'processing': true,
+                            'serverSide': true,
+                            'serverMethod': 'POST',
+                            'idSrc' : "id",
+                            'ajax': {
+                                'url':'ajaxfile.php',
+                                'dataSRC': ""
+                            },
                             
-                <div>
-                    <?php
+                           
+
+                            'columns': [
+                                
+                                { sTitle: "ID", data: 'item_ID' },
+                                { data: 'item_Type' },
+                                { data: 'item_place' },
+                                { data: 'item_desc' },
+                                { data: 'item_dateFound' },
+                                { data: 'item_timeFound' },
                     
-                    $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
-                    $sql = "SELECT COUNT(*) AS cntrows FROM tb_item";
-                    $output = mysqli_query($conn,$sql);
-                    $fetchresult = $output->fetch_assoc();
-                    $allcount = $fetchresult['cntrows'];
-
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-                    
-                    
-                    $row = 0;
-                    $rowperpage = 5;
-                   
-                    if(isset($_POST['num_rows'])){
-                        $rowperpage = intval($_POST['num_rows']);
-
-                    }
-
-                    if ($allcount < $rowperpage){
-                        
-                    }
-                     // Previous Button
-                     if(isset($_POST['but_prev'])){
-                        $row = intval($_POST['row']);
-                        
-                        $row -= $rowperpage;
-                        
-                        if( $row < 0 ){
-                            $row = 0;
-                        }
-                        
-                    }
-
-                    // Next Button
-                    if(isset($_POST['but_next'])){
+                                { data: 'item_security' },
+                                { data: 'item_semester' },
+                                
+                                { data: 'item_status', mRender: function(data, type, row){
+                                    return (data == 1) ? "Claimed" : "Unclaimed";
+                                }},
+                                
+                                
                             
-                            $row = intval($_POST['row']);
-                            $allcount = $_POST['allcount'];
-                            $val = $row + $rowperpage;
-                            if( $val < $allcount ){
-                                $row = $val;
-                            }
-                        
-                    }
-                    $columns = array('item_ID','item_Type','item_place', 'item_desc', 'item_dateFound', 'item_timeFound', 'item_security', 'item_semester', 'item_status');
-                    
-                    // Only get the column if it exists in the above columns array, if it doesn't exist the database table will be sorted by the first item in the columns array.
-                    $column = isset($_GET['column']) && in_array($_GET['column'], $columns) ? $_GET['column'] : $columns[0];
-                    $sort_order = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
-                    
-                    $sql_query = "SELECT * FROM tb_item";
-                    
-                    if (empty($_POST['checks'])){
-                        $sql_query .= " WHERE item_status = 0 ";
-                    }else{
-                       
-                        $sql_query .= " WHERE item_status = 1 ";
-                    }
-                    
-                    if ($result = $conn->query($sql_query . " ORDER BY " .  $column . ' ' . $sort_order . " LIMIT $row, " . $rowperpage)) {
-                        // Some variables we need for the table.
-                        
-                        $up_or_down = str_replace(array('ASC','DESC'), array('up','down'), $sort_order); 
-                        $asc_or_desc = $sort_order == 'ASC' ? 'desc' : 'asc';
-                        $add_class = ' class="highlight"';
-                       
-                        $res = true;
-                        
-                    ?>
-
-                    <table class="table-responsive-sm" id="myTable">
-                        <thead>
-                        <tr>
-                            <th><a href="search.php?column=item_ID&order=<?php echo $asc_or_desc; ?>">Item ID <i class="fas fa-sort<?php echo $column == 'item_ID' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_Type&order=<?php echo $asc_or_desc; ?>">Type <i class="fas fa-sort<?php echo $column == 'item_Type' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_place&order=<?php echo $asc_or_desc; ?>">Place <i class="fas fa-sort<?php echo $column == 'item_place' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_desc&order=<?php echo $asc_or_desc; ?>">Item description <i class="fas fa-sort<?php echo $column == 'item_desc' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th style="padding-right:20px"><a href="search.php?column=item_dateFound&order=<?php echo $asc_or_desc; ?>">Date Found <i class="fas fa-sort<?php echo $column == 'item_dateFound' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_timeFound&order=<?php echo $asc_or_desc; ?>">Time Found <i class="fas fa-sort<?php echo $column == 'item_timeFound' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_security&order=<?php echo $asc_or_desc; ?>">Security Guard <i class="fas fa-sort<?php echo $column == 'item_security' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_semester&order=<?php echo $asc_or_desc; ?>">Semester <i class="fas fa-sort<?php echo $column == 'item_semester' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                            <th><a href="search.php?column=item_status&order=<?php echo $asc_or_desc; ?>">Status <i class="fas fa-sort<?php echo $column == 'item_status' ? '-' . $up_or_down : ''; ?>"></i></a></th>
-                        </tr>
-                        </thead>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                        <tbody>
-                        <tr data-href='claim_record.php?item_ID=<?php $_SESSION['itemID'] = $row['item_ID']; echo $_SESSION['itemID']?>'>
-                            <td<?php echo $column == 'item_ID' ? $add_class : ''; ?>><?php echo $row['item_ID']; ?></td>
-                            <td<?php echo $column == 'item_Type' ? $add_class : ''; ?>><?php echo $row['item_Type']; ?></td>
-                            <td<?php echo $column == 'item_place' ? $add_class : ''; ?>><?php echo $row['item_place']; ?></td>
-                            <td<?php echo $column == 'item_desc' ? $add_class : ''; ?>><?php echo $row['item_desc']; ?></td>
-                            <td<?php echo $column == 'item_dateFound' ? $add_class : ''; ?>><?php echo $row['item_dateFound']; ?></td>
-                            <td<?php echo $column == 'item_timeFound' ? $add_class : ''; ?>><?php echo $row['item_timeFound']; ?></td>
-                            <td<?php echo $column == 'item_security' ? $add_class : ''; ?>><?php echo $row['item_security']; ?></td>
-                            <td<?php echo $column == 'item_semester' ? $add_class : ''; ?>><?php echo $row['item_semester']; ?></td>
-                            <td<?php echo $column == 'item_status' ? $add_class : ''; ?>><?php if ($row['item_status'] == 0){$res = false; echo '<p style="color:red">';}else{$res=true; echo '<p style="color:blue">';}echo $converted_res = $res ? 'Claimed' : 'Unclaimed';?></td>
-                        </tr>
-                        </tbody>
-                        <?php endwhile; ?>
-                    </table>
-                </div>
-                <div style="margin-top:20px" id="div_pagination">
-                        <input type="hidden" name="row" value="<?php echo $row; ?>">
-                        <input type="hidden" name="allcount" value="<?php echo $allcount; ?>">
-                        <input type="submit" class="button" name="but_prev" value="Previous">
-                        <input type="submit" class="button" name="but_next" id="nxt" value="Next">
-                </div>
-                </form>
-        </div>
-    </div>
+                                ],
+                                
+                               
+                                "order": [[1, 'asc']]
+                               
+                        });
+                        $(document).ready(function($) {
+                            $('#myTable').on('click', 'tr', function ()
+                            {
+                                // var id = table.row( this ).data().id;
+                                var rows = table.rows(this).indexes();
+                                var selectedData = table.cell(rows, 0).data();
+                                
+                                console.log( selectedData);
+                                //alert('Clicked row id '+id );
+                                // 'this' refers to the current <td>, if you need information out of it
+                                document.location.href = "claim_record.php?item_ID=" + selectedData;
+                                //window.open('claim_record.php');
+                            });
+                           
+                        });
+                        });
+                    </script>
+                </table>
+           
     
+	
+	
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script> -->
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    
     <script src="js/sidebar.js"></script>
-    <script src="js/liveSearch.js"></script>
+    <!-- <script src="js/liveSearch.js"></script>
     <script src="js/searchLink.js"></script>
     <script src="js/numRows.js"></script>
+    <script src="js/dataSearch.js"></script> -->
 </body>
 
 </html>
 <?php
-	$result->free();
-}
+// 	$result->free();
+// }
 ?>
