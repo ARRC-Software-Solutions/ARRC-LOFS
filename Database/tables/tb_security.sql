@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2020 at 11:43 AM
+-- Generation Time: Mar 19, 2020 at 08:43 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -25,38 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_claimant`
---
-
-CREATE TABLE `tb_claimant` (
-  `Claimant_ID` int(11) NOT NULL,
-  `first_name` text NOT NULL,
-  `last_name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_item`
---
-
-CREATE TABLE `tb_item` (
-  `item_ID` int(11) NOT NULL,
-  `item_Type` varchar(100) NOT NULL,
-  `item_room_no` varchar(100) NOT NULL,
-  `item_desc` varchar(100) NOT NULL,
-  `item_dateFound` date NOT NULL,
-  `item_dateClaimed` date NOT NULL,
-  `item_timeClaimed` date NOT NULL,
-  `item_security` varchar(100) NOT NULL,
-  `item_semester` int(11) NOT NULL,
-  `claimant_ID` int(11) NOT NULL,
-  `item_status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tb_security`
 --
 
@@ -74,23 +42,13 @@ CREATE TABLE `tb_security` (
 --
 
 INSERT INTO `tb_security` (`security_ID`, `Username`, `first_name`, `last_name`, `password`, `admin_status`) VALUES
+(1234, 'Denie', 'Denie', 'Forton', '00c66aaf5f2c3f49946f15c1ad2ea0d3', 0),
+(1342234234, 'user', 'user', 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 0),
 (2147483647, 'admin', 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `tb_claimant`
---
-ALTER TABLE `tb_claimant`
-  ADD PRIMARY KEY (`Claimant_ID`);
-
---
--- Indexes for table `tb_item`
---
-ALTER TABLE `tb_item`
-  ADD PRIMARY KEY (`item_ID`);
 
 --
 -- Indexes for table `tb_security`
