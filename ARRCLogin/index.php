@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_connect_errno()) {
         // If there is an error with the connection, stop the script and display the error.
         // die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-        $_SESSION['message'] =('Failed to connect to MySQL: ' . mysqli_connect_error());
+        $_SESSION['message'] . '😞Failed to connect to MySQL: ' . mysqli_connect_error();
     }
 
     // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Verification success! User has loggedin!
                 // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
                 
-                $conn = mysqli_connect("localhost", "root", "", "db_lafts");
+                $conn = mysqli_connect("localhost", "root", "1234", "db_lafts");
                 $result = mysqli_query($conn, "SELECT admin_status from tb_security WHERE password = '$password' ");
                 $adminIdentifier = mysqli_fetch_assoc($result);
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['name'] = $_POST['username'];
             $_SESSION['id'] = $id;
     
-            header('Location:\Myprojects\ARCprojects\ARRC_LAFS\overview.php');
+            header('Location:\Myprojects\ARCprojects\ARRC_LAFS\admin_page.php');
        //     echo $adminIdentifier;
         }
                 if (  $data['aStatus'] == 0){
